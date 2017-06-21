@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 
 
 class UserController extends BaseController
@@ -16,8 +17,8 @@ class UserController extends BaseController
     public function index()
     {
         //
-        $users=User::paginate(10);
-        return view('admin.user.index',compact(['users']));
+        $users = User::paginate(10);
+        return view('admin.user.index', compact(['users']));
     }
 
     /**
@@ -28,23 +29,37 @@ class UserController extends BaseController
     public function create()
     {
         //
-        return view('admin.user.create');
+        $roles=Role::all();
+        return view('admin.user.create',compact(['roles']));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
+        $role_ids=$request->role_ids;
+        $user=User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>bcrypt($request->password),
+        ]);
+        if ($user){
+            $user->roles()->sync($role_ids);
+            return redirect()->back()->with('success','添加成功');
+        }
+        return  redirect()->back()->with('error','添加失败');
+
+
 
 
     }
@@ -52,7 +67,7 @@ class UserController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -63,22 +78,22 @@ class UserController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         //
-        $user=User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        return view('admin.user.edit',compact(['user']));
+        return view('admin.user.edit', compact(['user']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -89,7 +104,7 @@ class UserController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

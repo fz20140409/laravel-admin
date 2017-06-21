@@ -64,7 +64,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{route('admin.user.index')}}"><i class="fa fa-circle-o"></i> 用户</a></li>
-                    <li><a href="/adminlte/pages/layout/boxed.html"><i class="fa fa-circle-o"></i> 角色</a></li>
+                    <li><a href="{{route('admin.role.index')}}"><i class="fa fa-circle-o"></i> 角色</a></li>
                     <li><a href="/adminlte/pages/layout/fixed.html"><i class="fa fa-circle-o"></i> 权限</a></li>
                 </ul>
             </li>

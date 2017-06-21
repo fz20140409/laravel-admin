@@ -20,6 +20,7 @@
                     <h3 class="box-title">xx</h3>
                 </div>
                 <!-- /.box-header -->
+                @include('admin.common.alert')
                 <!-- form start -->
                 <form class="form-horizontal" method="post" action="{{ route('admin.user.store') }}">
                     {{csrf_field()}}
@@ -29,21 +30,23 @@
 
                             <div class="col-sm-10">
                                 <input name="email" value="{{old('email')}}" type="email" class="form-control" id="email" placeholder="邮箱" required autofocus>
+                                @if ($errors->has('email'))
+                                    <div class="alert alert-warning">{{ $errors->first('email') }}</div>
+                                @endif
                             </div>
                         </div>
-                        @if ($errors->has('email'))
-                            <div class="alert alert-warning">{{ $errors->first('email') }}</div>
-                        @endif
+
                         <div class="form-group">
                             <label for="password" class="col-sm-2 control-label">密码</label>
 
                             <div class="col-sm-10">
                                 <input name="password" type="password" class="form-control" id="password" placeholder="密码" required>
+                                @if ($errors->has('password'))
+                                    <div class="alert alert-warning">{{ $errors->first('password') }}</div>
+                                @endif
                             </div>
                         </div>
-                        @if ($errors->has('password'))
-                            <div class="alert alert-warning">{{ $errors->first('password') }}</div>
-                        @endif
+
                         <div class="form-group">
                             <label for="password-confirm" class="col-sm-2 control-label">确认密码</label>
 
@@ -56,28 +59,28 @@
 
                             <div class="col-sm-10">
                                 <input value="{{old('name')}}" name="name" type="text" class="form-control" id="name" placeholder="昵称" required>
+                                @if ($errors->has('name'))
+                                    <div class="alert alert-warning">{{ $errors->first('name') }}</div>
+                                @endif
                             </div>
                         </div>
-                        @if ($errors->has('name'))
-                            <div class="alert alert-warning">{{ $errors->first('name') }}</div>
-                        @endif
+
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-2 control-label">角色</label>
                             <div class="col-sm-10">
+                            @foreach($roles as $role)
+                            <label>
+                                <input value="{{$role->id}}" name="role_ids[]" type="checkbox" class="minimal">{{$role->display_name}}
+                            </label>
+                                @endforeach
 
-                            <label>
-                                <input type="checkbox" class="minimal">普通管理员
-                            </label>
-                            <label>
-                                <input type="checkbox" class="minimal">超级管理员
-                            </label>
 
                             </div>
                         </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-default">取消</button>
+                        <a href="{{route('admin.user.index')}}" class="btn btn-default">取消</a>
                         <button type="submit" class="btn btn-info pull-right">保存</button>
                     </div>
                     <!-- /.box-footer -->
