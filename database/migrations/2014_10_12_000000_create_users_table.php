@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
+            $table->bigInteger('ip',false,true)->nullable()->comment('最后登录的ip');
+            $table->timestamp('last_time')->nullable()->comment('最后登录时间');
             $table->timestamps();
         });
     }

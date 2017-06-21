@@ -35,7 +35,20 @@
 @include('admin.layouts._menu')
 
 <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Dashboard
+                <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Dashboard</li>
+            </ol>
+        </section>
     @yield('content')
+    </div>
     @include('admin.layouts._footer')
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->

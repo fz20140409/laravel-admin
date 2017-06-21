@@ -17,5 +17,9 @@ class UsersTableSeeder extends Seeder
             'email'=>'3040722030@qq.com',
             'password'=>bcrypt('admin888')
         ]);
+
+        $users = factory(App\User::class, 55)->make()->toArray();
+        DB::table('users')->insert($users);
+
     }
 }
