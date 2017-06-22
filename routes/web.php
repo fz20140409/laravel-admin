@@ -24,6 +24,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
 
     Route::resource('user','UserController');
     Route::resource('role','RoleController');
+    Route::resource('permission','PermissionController');
 
 });
 Auth::routes();

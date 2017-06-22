@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Permission;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Tools\Category;
 
 
 class PermissionController extends BaseController
@@ -16,6 +17,10 @@ class PermissionController extends BaseController
     public function index()
     {
         //
+        $permissions=Permission::all()->toArray();
+        $permissions=Category::toLevel($permissions);
+
+        return view('admin.permission.index',compact('permissions'));
     }
 
     /**

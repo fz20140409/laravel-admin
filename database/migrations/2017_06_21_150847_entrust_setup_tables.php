@@ -37,6 +37,9 @@ class EntrustSetupTables extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->integer('pid')->comment('父id');
+            $table->string('icon')->nullable()->comment('图片');
+            $table->boolean('ishow')->default(1)->comment('是否显示');
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
