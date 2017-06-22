@@ -41,7 +41,8 @@
                                 <td>{{$role->display_name}}</td>
                                 <td>{{$role->description}}</td>
                                 <td>
-                                    <a href="{{route('admin.user.edit',$role->id)}}" style="margin-right: 10px"><i class="fa fa-pencil-square-o " aria-hidden="true">修改</i></a>
+                                    <a href="{{route('admin.role.permission',$role->id)}}" style="margin-right: 10px"><i class="fa fa-lock " aria-hidden="true">权限</i></a>
+                                    <a href="{{route('admin.role.edit',$role->id)}}" style="margin-right: 10px"><i class="fa fa-pencil-square-o " aria-hidden="true">修改</i></a>
                                     <a><i class="fa  fa-trash-o " aria-hidden="true">删除</i></a>
                                 </td>
                             </tr>

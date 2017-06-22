@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Tools\Category;
 use App\Role;
+use App\Permission;
 use Illuminate\Http\Request;
 
 
@@ -15,8 +17,8 @@ class RoleController extends BaseController
      */
     public function index()
     {
-        $roles=Role::paginate(10);
-        return view('admin.role.index',compact('roles'));
+        $roles = Role::paginate(10);
+        return view('admin.role.index', compact('roles'));
     }
 
     /**
@@ -32,7 +34,7 @@ class RoleController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +45,7 @@ class RoleController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Role  $role
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function show(Role $role)
@@ -54,7 +56,7 @@ class RoleController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Role  $role
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function edit(Role $role)
@@ -65,8 +67,8 @@ class RoleController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Role  $role
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Role $role)
@@ -77,11 +79,20 @@ class RoleController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Role  $role
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function destroy(Role $role)
     {
         //
+    }
+
+    public function permission(Request $request, $id)
+    {
+        $permissions = Permission::all()->toArray();
+        $permissions = Category::proMenu($permissions);
+
+
+        return view('admin.role.permission',compact(['permissions']));
     }
 }
