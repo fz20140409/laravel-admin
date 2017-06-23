@@ -21,7 +21,7 @@
                         <input type="text">
                     </div>--}}
                     <div class="col-md-2 col-md-offset-10">
-                        <a href="{{route('admin.role.create')}}" class="btn btn-primary" href="">新增</a>
+                        <a href="{{route('admin.permission.create')}}" class="btn btn-primary" href="">新增</a>
                     </div>
                 </div>
                 <!-- /.box-header -->
