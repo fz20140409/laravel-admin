@@ -6,6 +6,7 @@ use App\Http\Controllers\Tools\Category;
 use App\Role;
 use App\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class RoleController extends BaseController
@@ -89,10 +90,46 @@ class RoleController extends BaseController
 
     public function permission(Request $request, $id)
     {
+        //获取角色的权限
+        $role = Role::findOrFail($id);
+        $arr = $role->perms()->get()->toArray();
+        $role_permissions = array();
+        foreach ($arr as $value) {
+            $role_permissions[] = $value['pivot']['permission_id'];
+        }
+        //获取所有权限
         $permissions = Permission::all()->toArray();
-        $permissions = Category::proMenu($permissions);
+        $permissions = Category::toLevel($permissions, 0, '&nbsp;&nbsp;&nbsp;&nbsp;');
 
 
-        return view('admin.role.permission',compact(['permissions']));
+        return view('admin.role.permission', compact(['permissions', 'id', 'role_permissions']));
+    }
+
+    public function doPermission(Request $request)
+    {
+        $role_id = intval($request->role_id);
+        $permission_ids = $request->permission_ids;
+        if (empty($permission_ids)) {
+            return response()->json([
+                'msg' => '请选择权限'
+            ]);
+        }
+        $role = Role::findOrFail($role_id);
+        DB::beginTransaction();
+        try {
+
+            $role->perms()->sync($permission_ids);
+            DB::commit();
+            return response()->json([
+                'msg' => '授权成功'
+            ]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return response()->json([
+                'msg' => '授权失败'
+            ]);
+        }
+
+
     }
 }

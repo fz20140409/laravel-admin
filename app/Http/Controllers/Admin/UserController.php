@@ -113,11 +113,12 @@ class UserController extends BaseController
         $role_ids = $request->role_ids;
         DB::beginTransaction();
         try {
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+            $data = ['name' => $request->name, 'email' => $request->email];
+            //不填密码，不更新原密码
+            if (!empty($request->password)) {
+                $data['password'] = $request->password;
+            }
+            $user->update($data);
             if (!empty($role_ids)) {
                 $user->roles()->sync($role_ids);
             }

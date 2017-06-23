@@ -16,7 +16,7 @@ class PermissionsTableSeeder extends Seeder
        DB::table('permissions')->insert([
            'id'=>1,
            'pid'=>0,
-           'name'=>'admin.rbac',
+           'name'=>'admin.login',
            'display_name'=>'权限管理',
        ]);
         DB::table('permissions')->insert([
@@ -46,15 +46,10 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             'id'=>6,
             'pid'=>2,
-            'name'=>'admin.user.edit',
+            'name'=>'admin.logout',
             'display_name'=>'修改',
         ]);
-        DB::table('permissions')->insert([
-            'id'=>7,
-            'pid'=>2,
-            'name'=>'admin.user.destroy',
-            'display_name'=>'删除',
-        ]);
+
 
     }
 }

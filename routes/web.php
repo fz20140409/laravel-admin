@@ -25,6 +25,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
     Route::resource('user','UserController');
     Route::resource('role','RoleController');
     Route::get('role/permission/{id}','RoleController@permission')->name('role.permission');
+    Route::post('role/doPermission','RoleController@doPermission')->name('role.doPermission');
     Route::resource('permission','PermissionController');
 
 });

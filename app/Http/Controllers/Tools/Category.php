@@ -36,13 +36,20 @@ class Category
         return $arr;
     }
 
-    static function proMenu($cates, $name = 'child', $pid = 0)
+    /**
+     * 生成菜单
+     * @param array $cates 原始数据
+     * @param string $name
+     * @param int $pid
+     * @return string
+     */
+    static function proMenu( array $cates, $name = 'child', $pid = 0)
     {
         $arr = array();
         $html = '';
         foreach ($cates as $cate) {
             if ($cate['pid'] == $pid) {
-                $html .= ' <a href="#"><i class="fa fa-dashboard"></i> <span>' . $cate['display_name'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">';
+                $html .= ' <a href="'.route($cate['name']).'"><i class="fa fa-dashboard"></i> <span>' . $cate['display_name'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">';
                 $html .= self::proMenu($cates, $name, $cate['id']);
                 $html .= '</ul>';
             }
