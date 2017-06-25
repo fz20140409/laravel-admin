@@ -26,16 +26,13 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-           @if(!empty($perms))
-                {!! $perms !!}
+           @if(session(Auth::id()))
+                {!! session(Auth::id()) !!}
             @endif
                <li class="treeview">
                    <a href="#">
                        <i class="fa fa-files-o"></i>
                        <span>权限管理</span>
-                       <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
                    </a>
                    <ul class="treeview-menu">
                        <li><a href="{{route('admin.user.index')}}"><i class="fa fa-circle-o"></i> 用户</a></li>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Tools\Category;
 use App\Permission;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -19,9 +20,11 @@ class HomeController extends BaseController
     function home()
     {
 
-        $user_id = Auth::id();
-        $roles = DB::table('role_user')->where(['user_id' => $user_id])->get();
         $perms ='';
+        $user_id = Auth::id();
+        //没有缓存
+        if(!session()->has($user_id)){
+        $roles = DB::table('role_user')->where(['user_id' => $user_id])->get();
         if (!empty($roles)) {
             $role_ids = array();
             foreach ($roles as $role) {
@@ -40,9 +43,13 @@ class HomeController extends BaseController
 
 
         if (!empty($perms)) {
-            $perms = Category::proMenu($perms);
+            $layer = Category::toLayer($perms);
+            $perms = Category::proMenu($layer);
         }
-        return view('admin.home.home', compact('perms'));
+
+            session([$user_id=>$perms]);
+        }
+        return view('admin.home.home');
     }
 
     public function __construct()

@@ -36,26 +36,22 @@ class Category
         return $arr;
     }
 
-    /**
-     * 生成菜单
-     * @param array $cates 原始数据
-     * @param string $name
-     * @param int $pid
-     * @return string
-     */
-    static function proMenu( array $cates, $name = 'child', $pid = 0)
+    static function proMenu($layer, $name = 'child')
     {
-        $arr = array();
         $html = '';
-        foreach ($cates as $cate) {
-            if ($cate['pid'] == $pid) {
-                $html .= ' <a href="'.route($cate['name']).'"><i class="fa fa-dashboard"></i> <span>' . $cate['display_name'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">';
-                $html .= self::proMenu($cates, $name, $cate['id']);
-                $html .= '</ul>';
+        foreach ($layer as $t) {
+            //没有子菜单
+            if (empty($t[$name])) {
+                $html .= ' <li><a href="'.$t['url'].'"><i class="fa fa-circle-o text-red"></i> <span>' . $t['display_name'] . '</span></a></li>';
+            } else {
+                //子菜单
+                $html .= '<li class="treeview"><a href="'.$t['url'].'"><i class="fa fa-share"></i> <span>' . $t['display_name'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">';
+                $html .= self::proMenu($t[$name], $name);
+                $html .= '</ul></li>';
             }
         }
-        return $html ? ' <li class="treeview">' . $html . '</li>' : $html;
-
+        return $html;
     }
+
 
 }

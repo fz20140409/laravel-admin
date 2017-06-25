@@ -23,7 +23,7 @@
                 @include('admin.common.alert')
                 <!-- form start -->
                     <form class="form-horizontal" method="post"
-                          action="@if(isset($permission)){{ route('admin.user.update',$permission) }}@else{{ route('admin.user.store') }}@endif">
+                          action="@if(isset($permission)){{ route('admin.permission.update',$permission) }}@else{{ route('admin.permission.store') }}@endif">
                         {{csrf_field()}}
                         @if(isset($permission)){{method_field('PUT')}}@endif
                         <div class="box-body">
@@ -31,20 +31,20 @@
                                 <label for="pid" class="col-sm-2 control-label">上级菜单</label>
 
                                 <div class="col-sm-10">
-                                    <select name="pid" class="form-control" id="pid" autofocus>
+                                    <select name="pid" class="form-control" id="pid">
                                         <option value="0">一级菜单</option>
                                         @foreach($permissions as $perm)
-                                            <option value="{{$perm['id']}}">{{$perm['delimiter'].$perm['display_name']}}</option>
+                                            <option @if(isset($permission)&&$permission->pid==$perm['id']) selected @endif value="{{$perm['id']}}">{{$perm['delimiter'].$perm['display_name']}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="display_name" class="col-sm-2 control-label">名称菜单</label>
+                                <label for="display_name" class="col-sm-2 control-label">菜单名称</label>
 
                                 <div class="col-sm-10">
                                     <input name="display_name"
-                                           value="@if(isset($permission)){{$permission->email}}@else{{old('display_name')}}@endif"
+                                           value="@if(isset($permission)){{$permission->display_name}}@else{{old('display_name')}}@endif"
                                            type="text" class="form-control" id="display_name" placeholder="名称菜单"
                                            required>
                                     @if ($errors->has('display_name'))
@@ -52,12 +52,11 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">路由</label>
+                                <label for="name" class="col-sm-2 control-label">权限标识</label>
 
                                 <div class="col-sm-10">
-                                    <input name="name" type="text" class="form-control" id="name" placeholder="路由"
+                                    <input value="@if(isset($permission)){{$permission->name}}@else{{old('name')}}@endif" name="name" type="text" class="form-control" id="name" placeholder="权限标识"
                                            required>
                                     @if ($errors->has('password'))
                                         <div class="alert alert-warning">{{ $errors->first('password') }}</div>
@@ -65,10 +64,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="url" class="col-sm-2 control-label">url</label>
+
+                                <div class="col-sm-10">
+                                    <input value="@if(isset($permission)){{$permission->url}}@else{{old('url')}}@endif" name="url" type="text" class="form-control" id="url" placeholder="url"
+                                           >
+                                    @if ($errors->has('url'))
+                                        <div class="alert alert-warning">{{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="icon" class="col-sm-2 control-label">图标</label>
 
                                 <div class="col-sm-10">
-                                    <input name="icon" type="text" class="form-control" id="icon" placeholder="图标">
+                                    <input value="@if(isset($permission)){{$permission->icon}}@else{{old('icon')}}@endif" name="icon" type="text" class="form-control" id="icon" placeholder="图标">
                                     @if ($errors->has('password'))
                                         <div class="alert alert-warning">{{ $errors->first('password') }}</div>
                                     @endif
@@ -79,10 +89,10 @@
 
                                 <div class="col-sm-10">
                                     <label>
-                                        <input value="1" type="radio" name="ishow" class="minimal" checked>是
+                                        <input value="1" type="radio" name="ishow" class="minimal"  @if(isset($permission)&&$permission->ishow!=1)  @else checked @endif>是
                                     </label>
                                     <label style="margin-left: 10px">
-                                        <input value="0" type="radio" name="ishow" class="minimal">否
+                                        <input value="0" type="radio" name="ishow" class="minimal" @if(isset($permission)&&$permission->ishow==0) checked @endif>否
                                     </label>
                                 </div>
                             </div>
@@ -91,7 +101,7 @@
 
                                 <div class="col-sm-10">
                                     <textarea name="description" id="description" class="form-control" rows="3"
-                                              placeholder="描述 ..."></textarea>
+                                              placeholder="描述 ...">@if(isset($permission)){{$permission->description}}@else{{old('description')}}@endif</textarea>
 
 
                                 </div>
