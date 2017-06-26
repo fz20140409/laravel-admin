@@ -16,10 +16,21 @@ class UserController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
-        return view('admin.user.index', compact(['users']));
+        //定义每页显示几条
+        $page_sizes=['10'=>10,'25'=>25,'50'=>50,'100'=>100];
+        isset($request->page_size)?$page_size=$request->page_size:$page_size=10;
+        $where_str = $request->where;
+        $where = array();
+        $orWhere = array();
+        if (isset($where_str)) {
+            $where[] = ['email', 'like', '%' . $where_str . '%'];
+            $orWhere[] = ['name', 'like', '%' . $where_str . '%'];
+        }
+
+        $users = User::where($where)->orWhere($orWhere)->paginate($page_size);
+        return view('admin.user.index', compact(['users', 'where_str','page_size','page_sizes']));
     }
 
     /**
@@ -155,6 +166,46 @@ class UserController extends BaseController
             ]);
 
         }
+    }
+
+    public function batch_destroy(Request $request)
+    {
+        $user_ids = $request->user_ids;
+        //检查是空，并且是否为数组
+        if (empty($user_ids)&&!is_array($user_ids)) {
+            return response()->json([
+                'msg' => 0
+            ]);
+        }
+        //检查是否数组的每个值是否为整数
+        foreach ($user_ids as $user_id) {
+            if (!preg_match("/^[0-9]*$/", $user_id)) {
+                return response()->json([
+                    'msg' => 0
+                ]);
+            }
+        }
+        //判定表的记录数和传递的一致
+        if (User::whereIn('id', $user_ids)->count() != count($user_ids)) {
+            return response()->json([
+                'msg' => 0
+            ]);
+        };
+        DB::beginTransaction();
+        try {
+            User::destroy($user_ids);
+            DB::table('role_user')->whereIn('user_id',$user_ids)->delete();
+            DB::commit();
+            return response()->json([
+                'msg' => 1
+            ]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return response()->json([
+                'msg' => 0
+            ]);
+        }
+
     }
 
 }

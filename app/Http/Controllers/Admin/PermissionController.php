@@ -167,12 +167,16 @@ class PermissionController extends BaseController
 
     }
 
-    protected function validator(Request $request,Permission $permission)
+    protected function validator(Request $request,Permission $permission=null)
     {
+        $id='';
+        if(!empty($permission)){
+            $id=$permission->id;
+        }
         return Validator::make($request->all(), [
             'pid' => 'required|integer',
             'display_name' => 'required|string',
-            'name' => "required|string|unique:permissions,name,$permission->id",
+            'name' => "required|string|unique:permissions,name,$id",
             'url' => 'nullable|string',
             'ishow' => 'required|integer',
         ])->validate();
