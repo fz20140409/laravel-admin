@@ -71,7 +71,7 @@
                         <div class="box-footer ">
                             <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
                             <div style="float: right">
-                                {{$users->appends(['where' => $where_str])->links()}}
+                                {{$users->appends(['where' => $where_str,'page_size'=>$page_size])->links()}}
                             </div>
 
 

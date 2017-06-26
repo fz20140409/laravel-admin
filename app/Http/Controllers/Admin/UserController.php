@@ -127,7 +127,7 @@ class UserController extends BaseController
             $data = ['name' => $request->name, 'email' => $request->email];
             //不填密码，不更新原密码
             if (!empty($request->password)) {
-                $data['password'] = $request->password;
+                $data['password'] = bcrypt($request->password);
             }
             $user->update($data);
             if (!empty($role_ids)) {

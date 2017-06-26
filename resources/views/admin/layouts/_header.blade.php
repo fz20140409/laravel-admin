@@ -222,11 +222,11 @@
 
                             <p>
                                 {{ Auth::user()->name }}
-                                <small>Member since Nov. 2012</small>
+                                <small>注册时间:{{ Auth::user()->created_at }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body">
+                        {{--<li class="user-body">
                             <div class="row">
                                 <div class="col-xs-4 text-center">
                                     <a href="#">Followers</a>
@@ -239,11 +239,11 @@
                                 </div>
                             </div>
                             <!-- /.row -->
-                        </li>
+                        </li>--}}
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="#" class="btn btn-default btn-flat">个人中心</a>
                             </div>
                             <div class="pull-right">
                                 <a onclick="event.preventDefault();
