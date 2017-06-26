@@ -57,6 +57,22 @@ class PermissionsTableSeeder extends Seeder
             'ishow'=>0,
             'display_name'=>'修改',
         ]);
+        DB::table('permissions')->insert([
+            'id'=>8,
+            'pid'=>0,
+            'name'=>'admin.tools',
+            'ishow'=>1,
+            'icon'=>'fa fa-wrench',
+            'display_name'=>'工具',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>9,
+            'pid'=>8,
+            'name'=>'admin.builder',
+            'url'=>'route#admin.builder.index#',
+            'ishow'=>1,
+            'display_name'=>'生成器',
+        ]);
 
 
     }

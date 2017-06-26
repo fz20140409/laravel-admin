@@ -24,10 +24,13 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
 
     Route::resource('user','UserController');
     Route::post('user/batch_destroy','UserController@batch_destroy')->name('user.batch_destroy');
+
     Route::resource('role','RoleController');
     Route::get('role/permission/{id}','RoleController@permission')->name('role.permission');
     Route::post('role/doPermission','RoleController@doPermission')->name('role.doPermission');
+
     Route::resource('permission','PermissionController');
+    Route::resource('builder','BuilderController');
 
 });
 Auth::routes();
