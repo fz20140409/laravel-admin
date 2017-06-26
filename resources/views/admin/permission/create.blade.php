@@ -85,6 +85,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="icon" class="col-sm-2 control-label"></label>
+
+                                <div class="col-sm-10">
+                                  <a href="http://fontawesome.io/icons/">图标库</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="password" class="col-sm-2 control-label">显示</label>
 
                                 <div class="col-sm-10">
@@ -110,7 +117,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
-                            <button onclick="history.go(-1)" class="btn btn-default">取消</button>
+                            <a href="{{route('admin.permission.index')}}" class="btn btn-default">返回</a>
                             <button type="submit" class="btn btn-info pull-right">保存</button>
                         </div>
                         <!-- /.box-footer -->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -17,7 +18,6 @@ class UserController extends BaseController
      */
     public function index()
     {
-        //
         $users = User::paginate(10);
         return view('admin.user.index', compact(['users']));
     }

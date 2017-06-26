@@ -26,10 +26,10 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-           @if(session(Auth::id()))
-                {!! session(Auth::id()) !!}
+           @if(session('user'.Auth::id()))
+                {!! session('user'.Auth::id()) !!}
             @endif
-               <li class="treeview">
+               {{--<li class="treeview">
                    <a href="#">
                        <i class="fa fa-files-o"></i>
                        <span>权限管理</span>
@@ -39,7 +39,7 @@
                        <li><a href="{{route('admin.role.index')}}"><i class="fa fa-circle-o"></i> 角色</a></li>
                        <li><a href="{{route('admin.permission.index')}}"><i class="fa fa-circle-o"></i> 权限</a></li>
                    </ul>
-               </li>
+               </li>--}}
             {{--<li class="treeview">
                 <a href="#">
                     <i class="fa fa-files-o"></i>

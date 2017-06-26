@@ -39,13 +39,36 @@ class Category
     static function proMenu($layer, $name = 'child')
     {
         $html = '';
+        $url = '';
         foreach ($layer as $t) {
+            if (!empty($t['url'])) {
+                //todo
+                //正则校验
+                list($fun, $route, $params) = explode('#', $t['url']);
+                if (!empty($params)) {
+                    $params = json_decode($params, true);
+                }
+                switch ($fun) {
+                    case 'url':
+                        !empty($params) ? $url = url($route, $params) : $url = url($route);
+
+                        break;
+                    case 'route':
+                        !empty($params) ? $url = route($route, $params) : $url = route($route);
+                        break;
+                    case 'action':
+                        !empty($params) ? $url = action($route, $params) : $url = action($route);
+                        break;
+                }
+            } else {
+                $url = '';
+            }
             //没有子菜单
             if (empty($t[$name])) {
-                $html .= ' <li><a href="'.$t['url'].'"><i class="fa fa-circle-o text-red"></i> <span>' . $t['display_name'] . '</span></a></li>';
+                $html .= ' <li><a href="' . $url . '"><i class="fa fa-circle-o text-red"></i> <span>' . $t['display_name'] . '</span></a></li>';
             } else {
                 //子菜单
-                $html .= '<li class="treeview"><a href="'.$t['url'].'"><i class="fa fa-share"></i> <span>' . $t['display_name'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">';
+                $html .= '<li class="treeview"><a href="' . $url . '"><i class="'.$t['icon'].'"></i> <span>' . $t['display_name'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">';
                 $html .= self::proMenu($t[$name], $name);
                 $html .= '</ul></li>';
             }

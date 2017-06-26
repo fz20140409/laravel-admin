@@ -28,17 +28,19 @@
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover table-bordered">
                             <tr>
-                                <th>ID</th>
+                                <th>图标</th>
                                 <th>菜单名称</th>
-                                <th>路由</th>
+                                <th>权限标识</th>
+                                <th>url</th>
                                 <th>描述</th>
                                 <th>操作</th>
                             </tr>
                             @foreach($permissions as $permission)
                                 <tr>
-                                    <td>{{$permission['id']}}</td>
+                                    <td><i class="{{$permission['icon']}}" aria-hidden="true"></i></td>
                                     <td>{{$permission['delimiter'].$permission['display_name']}}</td>
                                     <td>{{$permission['name']}}</td>
+                                    <td>{{$permission['url']}}</td>
                                     <td>{{$permission['description']}}</td>
                                     <td>
                                         <a href="{{route('admin.permission.edit',$permission['id'])}}"

@@ -80,7 +80,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button onclick="history.go(-1)" class="btn btn-default">取消</button>
+                        <a href="{{route('admin.user.index')}}" class="btn btn-default">返回</a>
                         <button type="submit" class="btn btn-info pull-right">保存</button>
                     </div>
                     <!-- /.box-footer -->

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class RolesTableSeeder extends Seeder
 {
     /**
@@ -13,16 +14,17 @@ class RolesTableSeeder extends Seeder
     {
         //
         DB::table('roles')->insert([
-            'name'=>'general_administrator',
-            'display_name'=>'普通管理员'
+            'name' => 'general_administrator',
+            'display_name' => '普通管理员'
         ]);
         DB::table('roles')->insert([
-            'name'=>'system_administrator',
-            'display_name'=>'系统管理员'
+            'name' => 'system_administrator',
+            'display_name' => '系统管理员'
         ]);
         DB::table('roles')->insert([
-            'name'=>'super_administrator',
-            'display_name'=>'超级管理员'
+            'name' => 'super_administrator',
+            'display_name' => '超级管理员'
         ]);
+
     }
 }

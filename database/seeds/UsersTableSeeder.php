@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
             'password'=>bcrypt('admin888')
         ]);
 
+
         $users = factory(App\User::class, 55)->make()->toArray();
         DB::table('users')->insert($users);
 

@@ -22,8 +22,9 @@ class HomeController extends BaseController
 
         $perms ='';
         $user_id = Auth::id();
+        $session_key='user'.$user_id;
         //没有缓存
-        if(!session()->has($user_id)){
+        if(!session()->has($session_key)){
         $roles = DB::table('role_user')->where(['user_id' => $user_id])->get();
         if (!empty($roles)) {
             $role_ids = array();
@@ -47,7 +48,7 @@ class HomeController extends BaseController
             $perms = Category::proMenu($layer);
         }
 
-            session([$user_id=>$perms]);
+            session(["$session_key"=>$perms]);
         }
         return view('admin.home.home');
     }
