@@ -54,6 +54,9 @@
                                         <td>{{long2ip($user->ip)}}</td>
                                         <td>{{$user->last_time}}</td>
                                         <td>
+                                            <a href="{{route('admin.user.show',$user->id)}}"
+                                               style="margin-right: 10px"><i
+                                                        class="fa fa-eye " aria-hidden="true">查看</i></a>
                                             @if(Auth::user()->can('admin.user.edit'))
                                                 <a href="{{route('admin.user.edit',$user->id)}}"
                                                    style="margin-right: 10px"><i
@@ -69,7 +72,9 @@
                         </form>
 
                         <div class="box-footer ">
+                            @if(Auth::user()->can('admin.user.batch_destroy'))
                             <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
+                            @endif
                             <div style="float: right">
                                 {{$users->appends(['where' => $where_str,'page_size'=>$page_size])->links()}}
                             </div>
@@ -104,8 +109,8 @@
                     url: '{{route("admin.user.batch_destroy")}}',
                     type: 'post',
                     data: $("#user_ids").serialize(),
-                    success: function ($data) {
-                        if ($data.msg == 1) {
+                    success: function (data) {
+                        if (data.msg == 1) {
                             layer.alert('删除成功');
                             location.reload();
                         } else {

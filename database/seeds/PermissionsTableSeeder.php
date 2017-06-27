@@ -53,7 +53,7 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             'id'=>6,
             'pid'=>2,
-            'name'=>' admin.user.edit',
+            'name'=>'admin.user.edit',
             'ishow'=>0,
             'display_name'=>'修改',
         ]);
@@ -72,6 +72,34 @@ class PermissionsTableSeeder extends Seeder
             'url'=>'route#admin.builder.index#',
             'ishow'=>1,
             'display_name'=>'生成器',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>10,
+            'pid'=>2,
+            'name'=>'admin.user.destroy',
+            'ishow'=>0,
+            'display_name'=>'删除',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>11,
+            'pid'=>2,
+            'name'=>'admin.user.batch_destroy',
+            'ishow'=>0,
+            'display_name'=>'批量删除',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>12,
+            'pid'=>2,
+            'name'=>'admin.user.show',
+            'ishow'=>0,
+            'display_name'=>'查看',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>13,
+            'pid'=>3,
+            'name'=>'admin.role.permission',
+            'ishow'=>0,
+            'display_name'=>'权限',
         ]);
 
 

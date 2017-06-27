@@ -18,6 +18,7 @@ class UserController extends BaseController
      */
     public function index(Request $request)
     {
+
         //定义每页显示几条
         $page_sizes=['10'=>10,'25'=>25,'50'=>50,'100'=>100];
         isset($request->page_size)?$page_size=$request->page_size:$page_size=10;
@@ -88,6 +89,11 @@ class UserController extends BaseController
     public function show($id)
     {
         //
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        $show=1;
+
+        return view('admin.user.create', compact(['user', 'roles','show']));
     }
 
     /**

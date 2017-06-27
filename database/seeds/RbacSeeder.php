@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class RbacSeeder extends Seeder
 {
     /**
@@ -13,8 +14,8 @@ class RbacSeeder extends Seeder
     {
         //
         DB::table('role_user')->insert([
-            'user_id'=>1,
-            'role_id'=>3,
+            'user_id' => 1,
+            'role_id' => 3,
 
         ]);
         DB::table('permission_role')->insert([
@@ -39,6 +40,30 @@ class RbacSeeder extends Seeder
         ]);
         DB::table('permission_role')->insert([
             'permission_id' => 9,
+            'role_id' => 3,
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 12,
+            'role_id' => 3,
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 13,
+            'role_id' => 3,
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 5,
+            'role_id' => 3,
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 6,
+            'role_id' => 3,
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 10,
+            'role_id' => 3,
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 11,
             'role_id' => 3,
         ]);
 
