@@ -20,7 +20,7 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <input value="{{$where_str}}" name="where" type="text" class="form-control"
+                                    <input value="{{$where_str}}" name="where_str" type="text" class="form-control"
                                            placeholder="邮箱/昵称">
                                 </div>
                                 <button type="submit" class="btn btn-primary">查询</button>

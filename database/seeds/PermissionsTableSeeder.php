@@ -109,6 +109,14 @@ class PermissionsTableSeeder extends Seeder
             'ishow'=>0,
             'display_name'=>'后台主页',
         ]);
+        DB::table('permissions')->insert([
+            'id'=>15,
+            'pid'=>8,
+            'name'=>trim('admin.logs.index'),
+            'url'=>'route#admin.logs.index#',
+            'ishow'=>1,
+            'display_name'=>'日志分析',
+        ]);
 
 
     }

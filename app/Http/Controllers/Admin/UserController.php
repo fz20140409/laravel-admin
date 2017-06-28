@@ -5,39 +5,38 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 
 class UserController extends BaseController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 列表
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
 
         //定义每页显示几条
-        $page_sizes=['10'=>10,'25'=>25,'50'=>50,'100'=>100];
-        isset($request->page_size)?$page_size=$request->page_size:$page_size=10;
-        $where_str = $request->where;
+        $page_sizes = ['10' => 10, '25' => 25, '50' => 50, '100' => 100];
+        isset($request->page_size) ? $page_size = $request->page_size : $page_size = 10;
+        //条件
+        $where_str = $request->where_str;
         $where = array();
         $orWhere = array();
         if (isset($where_str)) {
             $where[] = ['email', 'like', '%' . $where_str . '%'];
             $orWhere[] = ['name', 'like', '%' . $where_str . '%'];
         }
-
+        //分页
         $users = User::where($where)->orWhere($orWhere)->paginate($page_size);
-        return view('admin.user.index', compact(['users', 'where_str','page_size','page_sizes']));
+        //视图
+        return view('admin.user.index', compact(['users', 'where_str', 'page_size', 'page_sizes']));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 展示新增页
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -47,10 +46,9 @@ class UserController extends BaseController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * 新增
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -76,31 +74,27 @@ class UserController extends BaseController
             DB::rollBack();
             return redirect()->back()->with('error', '添加失败');
         }
-
-
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * 查看
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
         //
         $user = User::findOrFail($id);
         $roles = Role::all();
-        $show=1;
+        $show = 1;
 
-        return view('admin.user.create', compact(['user', 'roles','show']));
+        return view('admin.user.create', compact(['user', 'roles', 'show']));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * 展示修改页面
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -112,7 +106,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
+     * 修改
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
@@ -145,11 +139,10 @@ class UserController extends BaseController
             DB::rollBack();
             return redirect()->back()->with('error', '更新失败');
         }
-
     }
 
     /**
-     * 异步删除
+     * ajax删除
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
@@ -170,15 +163,20 @@ class UserController extends BaseController
             return response()->json([
                 'msg' => 0
             ]);
-
         }
     }
 
+    /**
+     *
+     * ajax批量删除
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function batch_destroy(Request $request)
     {
         $user_ids = $request->user_ids;
         //检查是空，并且是否为数组
-        if (empty($user_ids)&&!is_array($user_ids)) {
+        if (empty($user_ids) && !is_array($user_ids)) {
             return response()->json([
                 'msg' => 0
             ]);
@@ -200,7 +198,7 @@ class UserController extends BaseController
         DB::beginTransaction();
         try {
             User::destroy($user_ids);
-            DB::table('role_user')->whereIn('user_id',$user_ids)->delete();
+            DB::table('role_user')->whereIn('user_id', $user_ids)->delete();
             DB::commit();
             return response()->json([
                 'msg' => 1
@@ -211,7 +209,5 @@ class UserController extends BaseController
                 'msg' => 0
             ]);
         }
-
     }
-
 }

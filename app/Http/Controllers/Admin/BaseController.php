@@ -20,6 +20,5 @@ class BaseController extends Controller
 
         $this->middleware('admin_login_auth');
         $this->middleware('admin_permission_auth');
-
     }
 }

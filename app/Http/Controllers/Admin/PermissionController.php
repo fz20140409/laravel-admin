@@ -8,7 +8,6 @@ use App\Http\Controllers\Tools\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-
 class PermissionController extends BaseController
 {
     /**
@@ -63,7 +62,6 @@ class PermissionController extends BaseController
         } else {
             return redirect()->back()->with('error', '添加失败');
         }
-
     }
 
     /**
@@ -103,7 +101,7 @@ class PermissionController extends BaseController
     {
         //
 
-        $this->validator($request,$permission);
+        $this->validator($request, $permission);
         if ($permission->update([
             'name' => $request->name,
             'pid' => $request->pid,
@@ -143,7 +141,7 @@ class PermissionController extends BaseController
                 $sub[] = $sub_permission['id'];
             }
             $sub[] = $permission->id;
-        }else{
+        } else {
             //无子菜单
             $sub=$permission->id;
         }
@@ -163,14 +161,12 @@ class PermissionController extends BaseController
                 'msg' => 0
             ]);
         }
-
-
     }
 
-    protected function validator(Request $request,Permission $permission=null)
+    protected function validator(Request $request, Permission $permission = null)
     {
         $id='';
-        if(!empty($permission)){
+        if (!empty($permission)) {
             $id=$permission->id;
         }
         return Validator::make($request->all(), [
@@ -180,6 +176,5 @@ class PermissionController extends BaseController
             'url' => 'nullable|string',
             'ishow' => 'required|integer',
         ])->validate();
-
     }
 }

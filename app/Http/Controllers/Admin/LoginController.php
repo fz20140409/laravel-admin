@@ -31,7 +31,7 @@ class LoginController extends Controller
         ) {
             $user = Auth::user();
             $user->ip = ip2long($request->getClientIp());
-            $user->last_time=date('Y-m-d H:i:s',time());
+            $user->last_time=date('Y-m-d H:i:s', time());
             $user->save();
             return true;
         }

@@ -8,7 +8,6 @@ use App\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class RoleController extends BaseController
 {
     /**
@@ -117,7 +116,6 @@ class RoleController extends BaseController
         $role = Role::findOrFail($role_id);
         DB::beginTransaction();
         try {
-
             $role->perms()->sync($permission_ids);
             DB::commit();
             return response()->json([
@@ -129,7 +127,5 @@ class RoleController extends BaseController
                 'msg' => '授权失败'
             ]);
         }
-
-
     }
 }
