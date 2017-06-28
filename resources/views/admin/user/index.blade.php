@@ -10,20 +10,20 @@
                         <div class="col-md-10">
                             <form class="form-inline" action="{{route('admin.user.index')}}">
                                 <div class="form-group">
-                                    <label>每页</label>
+                                    <span style="margin-right: 5px">每页</span>
                                     <select name="page_size" class="form-control">
                                         @foreach($page_sizes as $k=> $v)
                                             <option @if($page_size==$k) selected @endif value="{{$k}}">{{$v}}</option>
                                             @endforeach
                                     </select>
-                                    <label>条</label>
+                                    <span style="margin:0 25px 0px 5px">条</span>
 
                                 </div>
                                 <div class="form-group">
                                     <input value="{{$where_str}}" name="where" type="text" class="form-control"
                                            placeholder="邮箱/昵称">
                                 </div>
-                                <button type="submit" class="btn btn-default">查询</button>
+                                <button type="submit" class="btn btn-primary">查询</button>
                             </form>
                         </div>
                         @if(Auth::user()->can('admin.user.create'))
@@ -73,7 +73,12 @@
 
                         <div class="box-footer ">
                             @if(Auth::user()->can('admin.user.batch_destroy'))
-                            <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
+                            <div class="btn-group">
+                                <button onclick="selectAll()" type="button" class="btn btn-default">全选</button>
+                                <button onclick="reverse()" type="button" class="btn btn-default">反选</button>
+                                <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
+
+                            </div>
                             @endif
                             <div style="float: right">
                                 {{$users->appends(['where' => $where_str,'page_size'=>$page_size])->links()}}
@@ -95,7 +100,7 @@
     <script src="/plugins/layer/layer.js"></script>
     <script src="/adminlte/plugins/iCheck/icheck.min.js"></script>
     <script>
-        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+        $('input[type="checkbox"].minimal').iCheck({
             checkboxClass: 'icheckbox_minimal-blue',
             radioClass: 'iradio_minimal-blue'
         });
@@ -122,6 +127,20 @@
             }else {
                 layer.alert('请选中要删除的列');
             }
+        }
+        //全选
+        function selectAll() {
+            $('input[type="checkbox"].minimal').iCheck('check')
+        }
+        //反选
+        function reverse() {
+            $('input[type="checkbox"].minimal').each(function () {
+               if($(this).is(":checked")){
+                   $(this).iCheck('uncheck');
+               }else {
+                   $(this).iCheck('check');
+               }
+            });
         }
     </script>
     @include('admin.common.layer_del')

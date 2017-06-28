@@ -53,9 +53,5 @@ class HomeController extends BaseController
         return view('admin.home.home');
     }
 
-    public function __construct()
-    {
-        $this->middleware('admin_auth');
-    }
 
 }

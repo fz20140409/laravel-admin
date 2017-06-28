@@ -7,7 +7,7 @@
     <script>
         $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
             checkboxClass: 'icheckbox_minimal-blue',
-            radioClass: 'iradio_minimal-blue'
+            radioClass: 'iradio_minimal-blue',
         });
     </script>
     @include('admin.common.layer_tip')
@@ -16,7 +16,7 @@
     <section class="content">
         <div class="row">
         <div class="col-md-12">
-            <div class="box box-primary">
+            <div class="box box-default">
                 <!-- form start -->
                 @if(isset($show))<fieldset disabled>@endif
                 <form class="box-header form-horizontal" method="post" action="@if(isset($user)){{ route('admin.user.update',$user) }}@else{{ route('admin.user.store') }}@endif">
@@ -65,11 +65,15 @@
 
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-2 control-label">角色</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                             @foreach($roles as $role)
 
-                            <label>
-                                <input @if(isset($user)&&$user->hasRole($role->name)) checked @endif value="{{$role->id}}" name="role_ids[]" type="checkbox" class="minimal">{{$role->display_name}}
+                            <label style="margin-top: 6px">
+                                @if(isset($show))
+                                    @if(isset($user)&&$user->hasRole($role->name)) {{$role->display_name}} @endif
+                                @else
+                                    <input @if(isset($user)&&$user->hasRole($role->name)) checked @endif value="{{$role->id}}" name="role_ids[]" type="checkbox" class="minimal">{{$role->display_name}}
+                                @endif
                             </label>
                                 @endforeach
                             </div>

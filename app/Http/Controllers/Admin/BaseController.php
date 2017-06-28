@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Route;
  */
 class BaseController extends Controller
 {
-    //
+
     function __construct()
     {
-            $this->middleware('permission_auth');
+
+        $this->middleware('admin_login_auth');
+        $this->middleware('admin_permission_auth');
 
     }
 }

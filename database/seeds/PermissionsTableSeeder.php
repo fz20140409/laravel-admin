@@ -16,14 +16,14 @@ class PermissionsTableSeeder extends Seeder
        DB::table('permissions')->insert([
            'id'=>1,
            'pid'=>0,
-           'name'=>'admin.rbac',
+           'name'=>trim('admin.rbac'),
            'display_name'=>'权限管理',
            'icon'=>'fa fa-lock',
        ]);
         DB::table('permissions')->insert([
             'id'=>2,
             'pid'=>1,
-            'name'=>'admin.user.index',
+            'name'=>trim('admin.user.index'),
             'url'=>'route#admin.user.index#',
             'display_name'=>'用户',
             'icon'=>'fa fa-user',
@@ -31,7 +31,7 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             'id'=>3,
             'pid'=>1,
-            'name'=>'admin.role.index',
+            'name'=>trim('admin.role.index'),
             'url'=>'route#admin.role.index#',
             'display_name'=>'角色',
             'icon'=>'fa fa-users',
@@ -39,28 +39,28 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             'id'=>4,
             'pid'=>1,
-            'name'=>'admin.permission.index',
+            'name'=>trim('admin.permission.index'),
             'url'=>'route#admin.permission.index#',
             'display_name'=>'权限',
         ]);
         DB::table('permissions')->insert([
             'id'=>5,
             'pid'=>2,
-            'name'=>'admin.user.create',
+            'name'=>trim('admin.user.create'),
             'ishow'=>0,
             'display_name'=>'增加',
         ]);
         DB::table('permissions')->insert([
             'id'=>6,
             'pid'=>2,
-            'name'=>'admin.user.edit',
+            'name'=>trim('admin.user.edit'),
             'ishow'=>0,
             'display_name'=>'修改',
         ]);
         DB::table('permissions')->insert([
             'id'=>8,
             'pid'=>0,
-            'name'=>'admin.tools',
+            'name'=>trim('admin.tools'),
             'ishow'=>1,
             'icon'=>'fa fa-wrench',
             'display_name'=>'工具',
@@ -68,7 +68,7 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             'id'=>9,
             'pid'=>8,
-            'name'=>'admin.builder',
+            'name'=>trim('admin.builder'),
             'url'=>'route#admin.builder.index#',
             'ishow'=>1,
             'display_name'=>'生成器',
@@ -76,30 +76,38 @@ class PermissionsTableSeeder extends Seeder
         DB::table('permissions')->insert([
             'id'=>10,
             'pid'=>2,
-            'name'=>'admin.user.destroy',
+            'name'=>trim('admin.user.destroy'),
             'ishow'=>0,
             'display_name'=>'删除',
         ]);
         DB::table('permissions')->insert([
             'id'=>11,
             'pid'=>2,
-            'name'=>'admin.user.batch_destroy',
+            'name'=>trim('admin.user.batch_destroy'),
             'ishow'=>0,
             'display_name'=>'批量删除',
         ]);
         DB::table('permissions')->insert([
             'id'=>12,
             'pid'=>2,
-            'name'=>'admin.user.show',
+            'name'=>trim('admin.user.show'),
             'ishow'=>0,
             'display_name'=>'查看',
         ]);
         DB::table('permissions')->insert([
             'id'=>13,
             'pid'=>3,
-            'name'=>'admin.role.permission',
+            'name'=>trim('admin.role.permission'),
             'ishow'=>0,
             'display_name'=>'权限',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>14,
+            'pid'=>0,
+            'name'=>trim('admin.home'),
+            'icon'=>'fa fa-home',
+            'ishow'=>0,
+            'display_name'=>'后台主页',
         ]);
 
 

@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
-class AdminAuth
+class AdminPermissionAuth
 {
     /**
      * Handle an incoming request.
@@ -16,11 +17,9 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::check()){
-            if ($request->expectsJson()) {
-                return response()->json(['error' => 'Unauthenticated.'], 401);
-            }
-            return redirect()->route('admin.login');
+        $action = Route::currentRouteName();
+        if(!Auth::user()->can($action)){
+            return redirect('/');
         }
         return $next($request);
     }
