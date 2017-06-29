@@ -65,7 +65,12 @@ class Category
             }
             //没有子菜单
             if (empty($t[$name])) {
-                $html .= ' <li><a href="' . $url . '"><i class="fa fa-circle-o text-red"></i> <span>' . $t['display_name'] . '</span></a></li>';
+                if($t['icon']){
+                    $html .= ' <li><a href="' . $url . '"><i class="'.$t['icon'].'"></i> <span>' . $t['display_name'] . '</span></a></li>';
+                }else{
+                    $html .= ' <li><a href="' . $url . '"><i class="fa fa-circle-o text-red"></i> <span>' . $t['display_name'] . '</span></a></li>';
+                }
+
             } else {
                 //子菜单
                 $html .= '<li class="treeview"><a href="' . $url . '"><i class="'.$t['icon'].'"></i> <span>' . $t['display_name'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">';
