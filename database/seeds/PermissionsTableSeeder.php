@@ -117,6 +117,16 @@ class PermissionsTableSeeder extends Seeder
             'ishow'=>1,
             'display_name'=>'日志分析',
         ]);
+        DB::table('permissions')->insert([
+            'id'=>16,
+            'pid'=>0,
+            'name'=>trim('admin.task.index'),
+            'icon'=>'fa fa-clock-o',
+            'url'=>'route#admin.task.index#',
+            'ishow'=>1,
+            'display_name'=>'定时任务',
+        ]);
+
 
 
     }

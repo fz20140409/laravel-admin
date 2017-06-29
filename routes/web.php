@@ -12,11 +12,6 @@
 */
 
 Route::get('/', function () {
-    Log::info('info');
-    Log::debug('debug');
-    Log::notice('notice');
-    Log::error('error');
-    Log::critical('critical');
     return view('welcome');
 });
 Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function (){
@@ -38,6 +33,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
     //
     Route::resource('builder','BuilderController');
     Route::get('logs', 'LogsController@index')->name('logs.index');
+    //
+    Route::resource('task','TaskManagerController');
 
 });
 Auth::routes();
