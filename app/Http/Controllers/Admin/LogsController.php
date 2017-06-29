@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
-
-class LogsController
+class LogsController extends LogViewerController
 {
 
     public function __construct()

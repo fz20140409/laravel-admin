@@ -12,6 +12,11 @@
 */
 
 Route::get('/', function () {
+    Log::info('info');
+    Log::debug('debug');
+    Log::notice('notice');
+    Log::error('error');
+    Log::critical('critical');
     return view('welcome');
 });
 Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function (){
