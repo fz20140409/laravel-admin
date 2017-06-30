@@ -1,6 +1,11 @@
 @extends('admin.layouts.default')
 @section('css')
     <link rel="stylesheet" href="/adminlte/plugins/iCheck/all.css">
+    <style>
+        .radio_class{
+            margin: 0px 10px 0px 5px;
+        }
+    </style>
 @endsection
 @section('js')
     <script src="/adminlte/plugins/iCheck/icheck.min.js"></script>
@@ -21,7 +26,7 @@
                     @if(isset($show))
                         <fieldset disabled>@endif
                             <form class="box-header form-horizontal" method="post"
-                                  action="@if(isset($task)){{ route('admin.user.update',$task) }}@else{{ route('admin.task.store') }}@endif">
+                                  action="@if(isset($task)){{ route('admin.task.update',$task) }}@else{{ route('admin.task.store') }}@endif">
                                 {{csrf_field()}}
                                 @if(isset($task)){{method_field('PUT')}}@endif
                                 <div class="box-body">
@@ -107,8 +112,9 @@
 
                                         <div class="col-sm-8">
                                             <select id="command_type" name="command_type" class="form-control">
-                                                <option value="1">laravel命令</option>
-                                                <option value="2">系统命令</option>
+                                                @foreach($command_types as $k=> $command_type)
+                                                    <option @if(isset($task)&&$task->$command_type==$k) selected  @endif value="{{$k}}">{{$command_type}}</option>
+                                                    @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -128,25 +134,20 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">是否允许任务重复</label>
                                         <div class="col-sm-8">
-                                            <label style="margin-top: 6px;margin-right: 20px">
-                                                <input name="is_wol" value="1" type="radio" class="minimal" checked>是
-                                            </label>
-                                            <label>
-                                                <input name="is_wol" value="0" type="radio" class="minimal">否
-                                            </label>
+                                            @foreach($is_wols as $k=>$is_wol)
+
+                                                <input @if(isset($task)&&$task->is_wol==$k) checked  @endif  required name="is_wol" value="{{$k}}" type="radio" class="minimal"><span class="radio_class">{{$is_wol}}</span>
+
+                                                @endforeach
 
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">维护模式是否强制执行</label>
                                         <div class="col-sm-8">
-                                            <label style="margin-top: 6px;margin-right: 20px">
-                                                <input name="is_eimm" value="1" type="radio" class="minimal" >是
-
-                                            </label>
-                                            <label>
-                                                <input name="is_eimm" value="0" type="radio" class="minimal" checked>否
-                                            </label>
+                                            @foreach($is_eimms as $k=>$is_eimm)
+                                                <input @if(isset($task)&&$task->is_eimm==$k) checked  @endif required name="is_eimm" value="{{$k}}" type="radio" class="minimal" ><span class="radio_class">{{$is_eimm}}</span>
+                                                @endforeach
 
                                         </div>
                                     </div>
@@ -161,23 +162,6 @@
                                             @endif
                                         </div>
                                     </div>
-
-
-                                    {{--<div class="form-group">
-                                        <label for="inputPassword3" class="col-sm-2 control-label">角色</label>
-                                        <div class="col-sm-8">
-                                        @foreach($roles as $role)
-
-                                        <label style="margin-top: 6px">
-                                            @if(isset($show))
-                                                @if(isset($user)&&$user->hasRole($role->name)) {{$role->display_name}} @endif
-                                            @else
-                                                <input @if(isset($user)&&$user->hasRole($role->name)) checked @endif value="{{$role->id}}" name="role_ids[]" type="checkbox" class="minimal">{{$role->display_name}}
-                                            @endif
-                                        </label>
-                                            @endforeach
-                                        </div>
-                                    </div>--}}
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer  @if(isset($show)) hidden @endif">
