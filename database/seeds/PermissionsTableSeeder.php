@@ -26,7 +26,6 @@ class PermissionsTableSeeder extends Seeder
             'name'=>trim('admin.user.index'),
             'url'=>'route#admin.user.index#',
             'display_name'=>'用户',
-            'icon'=>'fa fa-user',
         ]);
         DB::table('permissions')->insert([
             'id'=>3,
@@ -34,7 +33,6 @@ class PermissionsTableSeeder extends Seeder
             'name'=>trim('admin.role.index'),
             'url'=>'route#admin.role.index#',
             'display_name'=>'角色',
-            'icon'=>'fa fa-users',
         ]);
         DB::table('permissions')->insert([
             'id'=>4,
@@ -119,15 +117,12 @@ class PermissionsTableSeeder extends Seeder
         ]);
         DB::table('permissions')->insert([
             'id'=>16,
-            'pid'=>0,
+            'pid'=>8,
             'name'=>trim('admin.task.index'),
-            'icon'=>'fa fa-clock-o',
             'url'=>'route#admin.task.index#',
             'ishow'=>1,
             'display_name'=>'定时任务',
         ]);
-
-
 
     }
 }

@@ -34,7 +34,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
     Route::resource('builder','BuilderController');
     Route::get('logs', 'LogsController@index')->name('logs.index');
     //
-    Route::resource('task','TaskManagerController');
+    Route::resource('task','TaskController');
+    Route::post('task/batch_destroy','TaskController@batch_destroy')->name('task.batch_destroy');
+    Route::put('task/run/{id}','TaskController@run')->name('task.run');
 
 });
 Auth::routes();
