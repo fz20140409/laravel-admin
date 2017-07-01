@@ -26,11 +26,11 @@
                                 <button type="submit" class="btn btn-primary">查询</button>
                             </form>
                         </div>
-                       {{-- @if(Auth::user()->can('admin.task.create'))--}}
+                        @if(Auth::user()->can('admin.task.create'))
                             <div class="col-md-2">
                                 <a href="{{route('admin.task.create')}}" class="btn btn-primary" href="">新增</a>
                             </div>
-                      {{--  @endif--}}
+                        @endif
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">

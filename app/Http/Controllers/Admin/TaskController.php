@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Task;
 use Illuminate\Support\Facades\Validator;
 
-class TaskController extends Controller
+class TaskController extends BaseController
 {
 
     protected $command_types = [1 => 'laravel命令', 2 => '系统命令'];
@@ -140,7 +139,7 @@ class TaskController extends Controller
     {
         //
     }
-
+    //todo,校验规则未完善
     protected function validator(Request $request)
     {
         return Validator::make($request->all(), [

@@ -123,6 +123,43 @@ class PermissionsTableSeeder extends Seeder
             'ishow'=>1,
             'display_name'=>'定时任务',
         ]);
+        DB::table('permissions')->insert([
+            'id'=>17,
+            'pid'=>16,
+            'name'=>trim('admin.task.create'),
+            'ishow'=>0,
+            'display_name'=>'增加',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>18,
+            'pid'=>16,
+            'name'=>trim('admin.task.edit'),
+            'ishow'=>0,
+            'display_name'=>'修改',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>19,
+            'pid'=>16,
+            'name'=>trim('admin.task.destroy'),
+            'ishow'=>0,
+            'display_name'=>'删除',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>20,
+            'pid'=>16,
+            'name'=>trim('admin.task.batch_destroy'),
+            'ishow'=>0,
+            'display_name'=>'批量删除',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>21,
+            'pid'=>16,
+            'name'=>trim('admin.task.show'),
+            'ishow'=>0,
+            'display_name'=>'查看',
+        ]);
+
+
 
     }
 }

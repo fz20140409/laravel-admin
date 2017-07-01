@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Task;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
@@ -28,38 +29,46 @@ class Kernel extends ConsoleKernel
     {
         /*$schedule->command('inspire')
             ->everyMinute();*/
-        $tasks = Task::where(['is_run'=>1])->get();
-        foreach ($tasks as $task) {
-            $time = [
-                $task->minute,
-                $task->hour,
-                $task->day,
-                $task->month,
-                $task->week
-            ];
-            $cron = trim(implode(' ', $time));
-            Log::info($cron);
-            if ($task->command_type == 1) {
-                if (!$task->is_wol) {
-                    //避免任务重复
-                    if (!$task->is_eimm) {
-                        //维护模式强制执行
-                        $schedule->command($task->command)->withoutOverlapping()->evenInMaintenanceMode()->cron($cron);
-                    } else {
-                        $schedule->command($task->command)->withoutOverlapping()->cron($cron);
-                    }
-                } else {
-                    if (!$task->is_eimm) {
-                        //维护模式强制执行
-                        $schedule->command($task->command)->evenInMaintenanceMode()->cron($cron);
-                    } else {
-                        $schedule->command($task->command)->cron($cron);
-                    }
+        DB::beginTransaction();
+        try {
+            if (!empty($tasks)) {
+                $tasks = Task::where(['is_run' => 1])->get();
+                foreach ($tasks as $task) {
+                    $time = [
+                        $task->minute,
+                        $task->hour,
+                        $task->day,
+                        $task->month,
+                        $task->week
+                    ];
+                    $cron = trim(implode(' ', $time));
+                    Log::info($cron);
+                    if ($task->command_type == 1) {
+                        if (!$task->is_wol) {
+                            //避免任务重复
+                            if (!$task->is_eimm) {
+                                //维护模式强制执行
+                                $schedule->command($task->command)->withoutOverlapping()->evenInMaintenanceMode()->cron($cron);
+                            } else {
+                                $schedule->command($task->command)->withoutOverlapping()->cron($cron);
+                            }
+                        } else {
+                            if (!$task->is_eimm) {
+                                //维护模式强制执行
+                                $schedule->command($task->command)->evenInMaintenanceMode()->cron($cron);
+                            } else {
+                                $schedule->command($task->command)->cron($cron);
+                            }
 
+                        }
+                    } else {
+                        $schedule->exec($task->command)->cron($cron);
+                    }
                 }
-            } else {
-                $schedule->exec($task->command)->cron($cron);
             }
+        } catch (\Exception $exception) {
+            return true;
+
         }
 
 
