@@ -128,14 +128,14 @@ class PermissionsTableSeeder extends Seeder
             'pid'=>16,
             'name'=>trim('admin.task.create'),
             'ishow'=>0,
-            'display_name'=>'显示增加表单',
+            'display_name'=>'显示新增页',
         ]);
         DB::table('permissions')->insert([
             'id'=>18,
             'pid'=>16,
             'name'=>trim('admin.task.edit'),
             'ishow'=>0,
-            'display_name'=>'修改',
+            'display_name'=>'显示修改页',
         ]);
         DB::table('permissions')->insert([
             'id'=>19,
@@ -163,14 +163,21 @@ class PermissionsTableSeeder extends Seeder
             'pid'=>16,
             'name'=>trim('admin.task.store'),
             'ishow'=>0,
-            'display_name'=>'增加',
+            'display_name'=>'新增操作',
         ]);
         DB::table('permissions')->insert([
             'id'=>23,
             'pid'=>16,
             'name'=>trim('admin.task.run'),
             'ishow'=>0,
-            'display_name'=>'增加',
+            'display_name'=>'开启和关闭任务',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>24,
+            'pid'=>16,
+            'name'=>trim('admin.task.update'),
+            'ishow'=>0,
+            'display_name'=>'修改操作',
         ]);
 
 

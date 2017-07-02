@@ -63,7 +63,7 @@
                                         <td>{{$is_wols[$task->is_wol]}}</td>
                                         <td>
                                             <a href="javascript:run('{{route('admin.task.run',$task->id)}}')"
-                                               style="margin-right: 10px">{{$is_runs[$task->is_run]}}</a>
+                                               style="margin-right: 10px">@if($task->is_run==1)关闭任务 @else开启任务 @endif</a>
                                             <a href="{{route('admin.task.show',$task->id)}}"
                                                style="margin-right: 10px"><i
                                                         class="fa fa-eye " aria-hidden="true">查看</i></a>
@@ -163,10 +163,10 @@
                 type: 'PUT',
                 success: function (data) {
                     if (data.msg == 1) {
-                        layer.alert('开启任务成功');
+                        layer.alert('操作成功');
                         location.reload();
                     } else {
-                        layer.alert('开启任务失败');
+                        layer.alert('操作失败');
                     }
 
                 }

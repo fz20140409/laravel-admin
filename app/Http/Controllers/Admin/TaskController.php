@@ -160,7 +160,11 @@ class TaskController extends BaseController
     {
         $task = Task::find($id);
         if ($task) {
-            $task->is_run = 1;
+            if($task->is_run){
+                $task->is_run = 0;
+            }else{
+                $task->is_run = 1;
+            }
             $task->save();
             return response()->json([
                 'msg' => 1
