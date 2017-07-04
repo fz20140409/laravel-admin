@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
 	
-    return view('index');
+    return view('welcome');
 });
 Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function (){
     //login
