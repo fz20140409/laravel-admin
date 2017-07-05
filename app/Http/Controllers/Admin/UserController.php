@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
 {
@@ -16,10 +17,6 @@ class UserController extends BaseController
      */
     public function index(Request $request)
     {
-
-        //定义每页显示几条
-        $page_sizes = ['10' => 10, '25' => 25, '50' => 50, '100' => 100];
-        isset($request->page_size) ? $page_size = $request->page_size : $page_size = 10;
         //条件
         $where_str = $request->where_str;
         $where = array();
@@ -29,15 +26,11 @@ class UserController extends BaseController
             $orWhere[] = ['name', 'like', '%' . $where_str . '%'];
         }
         //分页
-        $users = User::where($where)->orWhere($orWhere)->paginate($page_size);
+        $users = User::where($where)->orWhere($orWhere)->paginate($this->page_size);
         //视图
-        return view('admin.user.index', compact(['users', 'where_str', 'page_size', 'page_sizes']));
+        return view('admin.user.index',['users'=>$users, 'where_str'=>$where_str, 'page_size'=>$this->page_size, 'page_sizes'=>$this->page_sizes]);
     }
 
-    /**
-     * 展示新增页
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function create()
     {
         //
