@@ -19,7 +19,9 @@ class AdminPermissionAuth
     {
         $action = Route::currentRouteName();
         if(!Auth::user()->can($action)){
+
             return redirect('/');
+
         }
         return $next($request);
     }

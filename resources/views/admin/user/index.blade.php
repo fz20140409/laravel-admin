@@ -26,11 +26,11 @@
                                     </div>
                                 </div>
                             </form>
-                            @if(Auth::user()->can('admin.user.create'))
-                                <div class="col-lg-2 col-xs-2 pull-right">
-                                    <a href="{{route('admin.user.create')}}" class="btn btn-primary">新增</a>
-                                </div>
-                            @endif
+
+                            <div class="col-lg-2 col-xs-2 pull-right">
+                                <a href="{{route('admin.user.create')}}" class="btn btn-primary">新增</a>
+                            </div>
+
                         </div>
                     </div>
                     <!--box-header-->
@@ -57,14 +57,14 @@
                                         <td>{{long2ip($user->ip)}}</td>
                                         <td>{{$user->last_time}}</td>
                                         <td>
-                                            <a class=" op_show"  href="{{route('admin.user.show',$user->id)}}"
-                                               style="margin-right: 10px;display: none">
+                                            <a   href="{{route('admin.user.show',$user->id)}}"
+                                               style="margin-right: 10px;">
                                                     <i class="fa fa-eye " aria-hidden="true">查看</i></a>
-                                                <a class=" op_edit"  href="{{route('admin.user.edit',$user->id)}}"
-                                                   style="margin-right: 10px;display: none">
+                                                <a  href="{{route('admin.user.edit',$user->id)}}"
+                                                   style="margin-right: 10px;">
                                                     <i class="fa fa-pencil-square-o " aria-hidden="true">修改</i></a>
 
-                                                <a style="display: none"  class=" op_destroy"  href="javascript:del('{{route('admin.user.destroy',$user->id)}}')">
+                                                <a     href="javascript:del('{{route('admin.user.destroy',$user->id)}}')">
                                                     <i class="fa  fa-trash-o " aria-hidden="true">删除</i></a>
                                         </td>
                                     </tr>
@@ -75,13 +75,11 @@
                     <!--box-body-->
                     <!--box-footer-->
                     <div class="box-footer ">
-                        @if(Auth::user()->can('admin.user.batch_destroy'))
-                            <div class="btn-group">
-                                <button onclick="selectAll()" type="button" class="btn btn-default">全选</button>
-                                <button onclick="reverse()" type="button" class="btn btn-default">反选</button>
-                                <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
-                            </div>
-                        @endif
+                        <div class="btn-group">
+                            <button onclick="selectAll()" type="button" class="btn btn-default">全选</button>
+                            <button onclick="reverse()" type="button" class="btn btn-default">反选</button>
+                            <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
+                        </div>
                         <div style="float: right">
                             {{$users->appends(['where_str' => $where_str,'page_size'=>$page_size])->links()}}
                         </div>
@@ -107,20 +105,6 @@
         });
     </script>
     <script>
-        //有查看权限，显示查看
-        @if(Auth::user()->can('admin.user.show'))
-             $(".op_show").show();
-        @endif
-
-        //有修改权限，显示修改
-        @if(Auth::user()->can('admin.user.edit'))
-            $(".op_edit").show();
-        @endif
-        //有删除权限，显示删除
-        @if(Auth::user()->can('admin.user.destroy'))
-             $(".op_destroy").show();
-        @endif
-
 
         //批量删除
         function batch_destroy() {
