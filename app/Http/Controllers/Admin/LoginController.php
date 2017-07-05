@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * 后台登录控制器
+ * 使用laravel 用户认证脚手架
+ * Class LoginController
+ * @package App\Http\Controllers\Admin
+ */
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -31,7 +37,7 @@ class LoginController extends Controller
         ) {
             $user = Auth::user();
             $user->ip = ip2long($request->getClientIp());
-            $user->last_time=date('Y-m-d H:i:s', time());
+            $user->last_time = date('Y-m-d H:i:s', time());
             $user->save();
             return true;
         }

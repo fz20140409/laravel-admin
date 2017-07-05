@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
 {
@@ -17,6 +16,7 @@ class UserController extends BaseController
      */
     public function index(Request $request)
     {
+
         //条件
         $where_str = $request->where_str;
         $where = array();
@@ -25,6 +25,7 @@ class UserController extends BaseController
             $where[] = ['email', 'like', '%' . $where_str . '%'];
             $orWhere[] = ['name', 'like', '%' . $where_str . '%'];
         }
+
         //分页
         $users = User::where($where)->orWhere($orWhere)->paginate($this->page_size);
         //视图

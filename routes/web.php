@@ -39,6 +39,11 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
     Route::post('task/batch_destroy','TaskController@batch_destroy')->name('task.batch_destroy');
     Route::put('task/run/{id}','TaskController@run')->name('task.run');
 
+    //
+    Route::get('/',function (){
+        return redirect()->route('admin.login');
+    });
+
 });
 Auth::routes();
 

@@ -19,7 +19,6 @@ class HomeController extends BaseController
     //
     function home()
     {
-
         $perms ='';
         $user_id = Auth::id();
         $session_key='user'.$user_id;
