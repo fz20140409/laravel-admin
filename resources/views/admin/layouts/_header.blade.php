@@ -16,6 +16,9 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
+                <li>
+                    <a href="javascript:updateCacheMneu()"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+                </li>
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
@@ -203,6 +206,8 @@
                                 <!-- end task item -->
                             </ul>
                         </li>
+
+
                         <li class="footer">
                             <a href="#">View all tasks</a>
                         </li>

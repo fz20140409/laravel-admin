@@ -26,9 +26,7 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-           @if(session('user'.Auth::id()))
-                {!! session('user'.Auth::id()) !!}
-            @endif
+           {!! Cache::get('user_menu_' . Auth::id()) !!}
                {{--<li class="treeview">
                    <a href="#">
                        <i class="fa fa-files-o"></i>

@@ -110,6 +110,10 @@ class RbacSeeder extends Seeder
             'permission_id' => 24,
             'role_id' => 3,
         ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 25,
+            'role_id' => 3,
+        ]);
 
 
     }

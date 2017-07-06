@@ -259,12 +259,23 @@
 <script src="/adminlte/bootstrap/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="/plugins/layer/layer.js"></script>
 <script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    function updateCacheMneu() {
+        $.ajax({
+            url:'{{route("admin.home")}}',
+            success:function ($data) {
+               if( $data.status==1){
+                   layer.alert('缓存更新成功')
+               }
+            }
+        });
+    }
 </script>
 @yield('js')
 <!-- AdminLTE App -->
