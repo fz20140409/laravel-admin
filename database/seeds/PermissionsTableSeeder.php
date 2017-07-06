@@ -186,6 +186,13 @@ class PermissionsTableSeeder extends Seeder
             'ishow'=>0,
             'display_name'=>'新增用户',
         ]);
+        DB::table('permissions')->insert([
+            'id'=>26,
+            'pid'=>2,
+            'name'=>trim('admin.user.update'),
+            'ishow'=>0,
+            'display_name'=>'修改用户',
+        ]);
 
 
 
