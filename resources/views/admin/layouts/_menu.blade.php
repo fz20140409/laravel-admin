@@ -26,7 +26,7 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-           {!! Cache::get('user_menu_' . Auth::id()) !!}
+           {!! session('perms') !!}
                {{--<li class="treeview">
                    <a href="#">
                        <i class="fa fa-files-o"></i>
