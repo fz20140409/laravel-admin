@@ -110,19 +110,24 @@
         function batch_destroy() {
             $cbs = $('table input[type="checkbox"]:checked');
             if ($cbs.length > 0) {
-                $.ajax({
-                    url: '{{route("admin.user.batch_destroy")}}',
-                    type: 'post',
-                    data: $("#user_ids").serialize(),
-                    success: function (data) {
-                        if (data.msg == 1) {
-                            layer.alert('删除成功');
-                            location.reload();
-                        } else {
-                            layer.alert('删除失败');
+                layer.confirm('确认删除？', {
+                    btn: ['确认', '取消']
+                },function () {
+                    $.ajax({
+                        url: '{{route("admin.user.batch_destroy")}}',
+                        type: 'post',
+                        data: $("#user_ids").serialize(),
+                        success: function (data) {
+                            if (data.msg == 1) {
+                                layer.alert('删除成功');
+                                location.reload();
+                            } else {
+                                layer.alert('删除失败');
+                            }
                         }
-                    }
+                    });
                 });
+
             } else {layer.alert('请选中要删除的列');}}
         //全选
         function selectAll() {

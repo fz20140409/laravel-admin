@@ -28,7 +28,7 @@ class LoginController extends Controller
     {
         return view('admin.login.login');
     }
-
+    //登录成功，记录ip,登录时间
     protected function attemptLogin(Request $request)
     {
         if ($this->guard()->attempt(

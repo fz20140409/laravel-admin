@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
 {
@@ -30,7 +30,7 @@ class UserController extends BaseController
         //分页
         $users = User::where($where)->orWhere($orWhere)->paginate($this->page_size);
         //视图
-        return view('admin.user.index',['users'=>$users, 'where_str'=>$where_str, 'page_size'=>$this->page_size, 'page_sizes'=>$this->page_sizes]);
+        return view('admin.user.index', ['users' => $users, 'where_str' => $where_str, 'page_size' => $this->page_size, 'page_sizes' => $this->page_sizes]);
     }
 
     public function create()
@@ -55,17 +55,19 @@ class UserController extends BaseController
         $role_ids = $request->role_ids;
         DB::beginTransaction();
         try {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
+
             if ($user && !empty($role_ids)) {
-                $user->roles()->sync($role_ids);
+                $user->attachRoles($role_ids);
             }
             DB::commit();
             return redirect()->back()->with('success', '添加成功');
         } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
             DB::rollBack();
             return redirect()->back()->with('error', '添加失败');
         }
@@ -127,10 +129,13 @@ class UserController extends BaseController
             $user->update($data);
             if (!empty($role_ids)) {
                 $user->roles()->sync($role_ids);
+            } else {
+                $user->roles()->detach();
             }
             DB::commit();
             return redirect()->back()->with('success', '更新成功');
         } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
             DB::rollBack();
             return redirect()->back()->with('error', '更新失败');
         }
@@ -148,12 +153,13 @@ class UserController extends BaseController
         try {
             $user = User::find($id);
             $user->delete();
-            $user->roles()->detach($id);
+            $user->detachRole($id);
             DB::commit();
             return response()->json([
                 'msg' => 1
             ]);
         } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
             DB::rollBack();
             return response()->json([
                 'msg' => 0
@@ -190,15 +196,21 @@ class UserController extends BaseController
                 'msg' => 0
             ]);
         };
-        DB::beginTransaction();
+        DB::beginTransaction($user_ids);
         try {
-            User::destroy($user_ids);
-            DB::table('role_user')->whereIn('user_id', $user_ids)->delete();
+            $users=User::whereIn('id',$user_ids)->get();
+            foreach ($users as $user){
+                $user->delete();
+                $user->detachRole($user);
+            }
+            //User::destroy($user_ids);
+            //DB::table('role_user')->whereIn('user_id', $user_ids)->delete();
             DB::commit();
             return response()->json([
                 'msg' => 1
             ]);
         } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
             DB::rollBack();
             return response()->json([
                 'msg' => 0

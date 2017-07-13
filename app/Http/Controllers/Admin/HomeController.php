@@ -21,7 +21,6 @@ class HomeController extends BaseController
                 $query->where('ishow', 1);
             }])->get()->toArray();
             foreach ($datas as $data) {
-
                 $perms = array_merge_recursive($perms, $data['perms']);
             }
             $layer = Category::toLayer($perms);

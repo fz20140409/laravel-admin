@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
 
-        $users = factory(App\User::class, 55)->make()->toArray();
+        $users = factory(App\User::class, 105)->make()->toArray();
         DB::table('users')->insert($users);
 
     }
