@@ -15,7 +15,7 @@ class BaseController extends Controller
 
 
     protected $page_sizes=array();//定义每页显示几条数组
-    protected $page_size;////定义每页显示几条
+    protected $page_size=10;////定义每页显示几条
 
     function __construct(Request $request)
     {
@@ -37,7 +37,9 @@ class BaseController extends Controller
     protected function initFields(Request $request){
 
         $this->page_sizes = ['10' => 10, '25' => 25, '50' => 50, '100' => 100];
-        isset($request->page_size) ?$this->page_size = $request->page_size : $this->page_size = 10;
+        if(isset($request->page_size) ){
+            $this->page_size = $request->page_size;
+        }
     }
 
 

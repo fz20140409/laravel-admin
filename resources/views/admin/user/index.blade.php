@@ -58,21 +58,18 @@
                                         <td>{{long2ip($user->ip)}}</td>
                                         <td>{{$user->last_time}}</td>
                                         <td>
-                                            @if(Auth::user()->can('admin.user.show'))
-                                            <a  href="{{route('admin.user.show',$user->id)}}"
-                                               style="margin-right: 10px;">
-                                                    <i class="fa fa-eye " aria-hidden="true">查看</i></a>
-                                            @endif
 
-                                            @if(Auth::user()->can('admin.user.edit'))
-                                            <a  href="{{route('admin.user.edit',$user->id)}}"
-                                               style="margin-right: 10px;">
+                                            <a class=" op_show" href="{{route('admin.user.show',$user->id)}}"
+                                               style="margin-right: 10px;display: none">
+                                                    <i class="fa fa-eye " aria-hidden="true">查看</i></a>
+
+                                            <a class=" op_edit"  href="{{route('admin.user.edit',$user->id)}}"
+                                               style="margin-right: 10px;display: none">
                                                 <i class="fa fa-pencil-square-o " aria-hidden="true">修改</i></a>
-                                            @endif
-                                            @if(Auth::user()->can('admin.user.destroy'))
-                                            <a   href="javascript:del('{{route('admin.user.destroy',$user->id)}}')">
+
+                                            <a style="display: none"  class=" op_destroy"  href="javascript:del('{{route('admin.user.destroy',$user->id)}}')">
                                                 <i class="fa  fa-trash-o " aria-hidden="true">删除</i></a>
-                                            @endif
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -114,6 +111,21 @@
         });
     </script>
     <script>
+
+
+        //有查看权限，显示查看
+        @if(Auth::user()->can('admin.user.show'))
+             $(".op_show").show();
+        @endif
+
+        //有修改权限，显示修改
+        @if(Auth::user()->can('admin.user.edit'))
+            $(".op_edit").show();
+        @endif
+        //有删除权限，显示删除
+        @if(Auth::user()->can('admin.user.destroy'))
+            $(".op_destroy").show();
+        @endif
 
         //批量删除
         function batch_destroy() {

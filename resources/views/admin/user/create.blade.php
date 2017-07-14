@@ -18,10 +18,10 @@
         <div class="col-md-12">
             <div class="box box-default">
                 <!-- form start -->
-                @if(isset($show))<fieldset disabled>@endif
                 <form class="box-header form-horizontal" method="post" action="@if(isset($user)){{ route('admin.user.update',$user) }}@else{{ route('admin.user.store') }}@endif">
                     {{csrf_field()}}
                     @if(isset($user)){{method_field('PUT')}}@endif
+                    @if(isset($show))<fieldset disabled>@endif
                     <div class="box-body">
                         <div class="form-group">
                             <label for="email" class="col-sm-2 control-label">邮箱</label>
@@ -79,14 +79,17 @@
                             </div>
                         </div>
                     </div>
+                    @if(isset($show))</fieldset>@endif
                     <!-- /.box-body -->
-                    <div class="box-footer  @if(isset($show)) hidden @endif">
+                    <div class="box-footer  ">
                         <a href="{{route('admin.user.index')}}" class="btn btn-default">返回</a>
-                        <button type="submit" class="btn btn-primary pull-right">保存</button>
+                        <button @if(isset($show)) style="display: none" @endif type="submit" class="btn btn-primary pull-right">保存</button>
                     </div>
                     <!-- /.box-footer -->
                 </form>
-                    @if(isset($show))</fieldset>@endif
+
+
+
             </div>
         </div>
         </div>
