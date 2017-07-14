@@ -127,11 +127,7 @@ class UserController extends BaseController
                 $data['password'] = bcrypt($request->password);
             }
             $user->update($data);
-            if (!empty($role_ids)) {
-                $user->roles()->sync($role_ids);
-            } else {
-                $user->roles()->detach();
-            }
+            $user->saveRoles($role_ids);
             DB::commit();
             return redirect()->back()->with('success', '更新成功');
         } catch (\Exception $exception) {
@@ -203,8 +199,6 @@ class UserController extends BaseController
                 $user->delete();
                 $user->detachRole($user);
             }
-            //User::destroy($user_ids);
-            //DB::table('role_user')->whereIn('user_id', $user_ids)->delete();
             DB::commit();
             return response()->json([
                 'msg' => 1

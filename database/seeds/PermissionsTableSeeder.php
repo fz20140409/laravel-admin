@@ -46,14 +46,14 @@ class PermissionsTableSeeder extends Seeder
             'pid'=>2,
             'name'=>trim('admin.user.create'),
             'ishow'=>0,
-            'display_name'=>'显示用户新增页面',
+            'display_name'=>'显示新增页',
         ]);
         DB::table('permissions')->insert([
             'id'=>6,
             'pid'=>2,
             'name'=>trim('admin.user.edit'),
             'ishow'=>0,
-            'display_name'=>'修改',
+            'display_name'=>'显示修改页',
         ]);
         DB::table('permissions')->insert([
             'id'=>8,
@@ -184,14 +184,14 @@ class PermissionsTableSeeder extends Seeder
             'pid'=>2,
             'name'=>trim('admin.user.store'),
             'ishow'=>0,
-            'display_name'=>'新增用户',
+            'display_name'=>'新增',
         ]);
         DB::table('permissions')->insert([
             'id'=>26,
             'pid'=>2,
             'name'=>trim('admin.user.update'),
             'ishow'=>0,
-            'display_name'=>'修改用户',
+            'display_name'=>'修改',
         ]);
 
 

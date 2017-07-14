@@ -26,10 +26,11 @@
                                     </div>
                                 </div>
                             </form>
-
+                            @if(Auth::user()->can('admin.user.create'))
                             <div class="col-lg-2 col-xs-2 pull-right">
                                 <a href="{{route('admin.user.create')}}" class="btn btn-primary">新增</a>
                             </div>
+                            @endif
 
                         </div>
                     </div>
@@ -57,15 +58,21 @@
                                         <td>{{long2ip($user->ip)}}</td>
                                         <td>{{$user->last_time}}</td>
                                         <td>
-                                            <a   href="{{route('admin.user.show',$user->id)}}"
+                                            @if(Auth::user()->can('admin.user.show'))
+                                            <a  href="{{route('admin.user.show',$user->id)}}"
                                                style="margin-right: 10px;">
                                                     <i class="fa fa-eye " aria-hidden="true">查看</i></a>
-                                                <a  href="{{route('admin.user.edit',$user->id)}}"
-                                                   style="margin-right: 10px;">
-                                                    <i class="fa fa-pencil-square-o " aria-hidden="true">修改</i></a>
+                                            @endif
 
-                                                <a     href="javascript:del('{{route('admin.user.destroy',$user->id)}}')">
-                                                    <i class="fa  fa-trash-o " aria-hidden="true">删除</i></a>
+                                            @if(Auth::user()->can('admin.user.edit'))
+                                            <a  href="{{route('admin.user.edit',$user->id)}}"
+                                               style="margin-right: 10px;">
+                                                <i class="fa fa-pencil-square-o " aria-hidden="true">修改</i></a>
+                                            @endif
+                                            @if(Auth::user()->can('admin.user.destroy'))
+                                            <a   href="javascript:del('{{route('admin.user.destroy',$user->id)}}')">
+                                                <i class="fa  fa-trash-o " aria-hidden="true">删除</i></a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -75,11 +82,13 @@
                     <!--box-body-->
                     <!--box-footer-->
                     <div class="box-footer ">
+                        @if(Auth::user()->can('admin.user.batch_destroy'))
                         <div class="btn-group">
                             <button onclick="selectAll()" type="button" class="btn btn-default">全选</button>
                             <button onclick="reverse()" type="button" class="btn btn-default">反选</button>
                             <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
                         </div>
+                        @endif
                         <div style="float: right">
                             {{$users->appends(['where_str' => $where_str,'page_size'=>$page_size])->links()}}
                         </div>
