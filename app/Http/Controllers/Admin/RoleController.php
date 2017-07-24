@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Tools\CacheTool;
 use App\Http\Controllers\Tools\Category;
 use App\Role;
 use App\Permission;
@@ -180,6 +181,7 @@ class RoleController extends BaseController
         DB::beginTransaction();
         try {
             $role->perms()->sync($permission_ids);
+            CacheTool::flush();
             DB::commit();
             return response()->json([
                 'msg' => '授权成功'

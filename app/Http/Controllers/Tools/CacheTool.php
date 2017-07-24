@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Permission;
 use App\Http\Controllers\Tools\Category;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 
 class CacheTool
 {
@@ -35,6 +36,11 @@ class CacheTool
         Cache::forever($key, $perms);
 
 
+    }
+
+    static function flush(){
+        Cache::tags(Config::get('entrust.role_user_table'))->flush();
+        Cache::tags(Config::get('entrust.permission_role_table'))->flush();
     }
 
 

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Tools\Category;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
+use App\Http\Controllers\Tools\CacheTool;
 
 /**
  * 后台主页控制器
@@ -36,8 +35,7 @@ class HomeController extends BaseController
 
     public function flushCache()
     {
-        Cache::tags(Config::get('entrust.role_user_table'))->flush();
-        Cache::tags(Config::get('entrust.permission_role_table'))->flush();
+        CacheTool::flush();
         return response()->json(['status' => 1]);
 
     }
