@@ -83,13 +83,6 @@
                     <!--box-footer-->
                     <!--todo-->
                     <div class="box-footer ">
-                        @if(Auth::user()->can('admin.role.batch_destroy'))
-                            <div class="btn-group">
-                                <button onclick="selectAll()" type="button" class="btn btn-default">全选</button>
-                                <button onclick="reverse()" type="button" class="btn btn-default">反选</button>
-                                <a href="javascript:batch_destroy()" class="btn btn-danger">批量删除</a>
-                            </div>
-                        @endif
                         <div style="float: right">
                             <!--todo-->
                             {{$roles->appends(['where_str' => $where_str,'page_size'=>$page_size])->links()}}
@@ -136,41 +129,6 @@
             $(".op_destroy").show();
         @endif
 
-        //批量删除
-        function batch_destroy() {
-            $cbs = $('table input[type="checkbox"]:checked');
-            if ($cbs.length > 0) {
-                layer.confirm('确认删除？', {
-                    btn: ['确认', '取消']
-                },function () {
-                    $.ajax({
-                        url: '{{route("admin.role.batch_destroy")}}',
-                        type: 'post',
-                        data: $("#user_ids").serialize(),
-                        success: function (data) {
-                            if (data.msg == 1) {
-                                layer.alert('删除成功');
-                                location.reload();
-                            } else {
-                                layer.alert('删除失败');
-                            }
-                        }
-                    });
-                });
-
-            } else {layer.alert('请选中要删除的列');}}
-        //全选
-        function selectAll() {
-            $('input[type="checkbox"].minimal').iCheck('check')
-        }
-        //反选
-        function reverse() {
-            $('input[type="checkbox"].minimal').each(function () {
-                if ($(this).is(":checked")) {
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('check');
-                }});}
     </script>
     @include('admin.common.layer_del')
 @endsection

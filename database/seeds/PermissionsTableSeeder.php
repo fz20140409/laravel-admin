@@ -230,13 +230,6 @@ class PermissionsTableSeeder extends Seeder
             'display_name'=>'修改',
         ]);
         DB::table('permissions')->insert([
-            'id'=>32,
-            'pid'=>3,
-            'name'=>trim('admin.role.batch_destroy'),
-            'ishow'=>0,
-            'display_name'=>'批量删除',
-        ]);
-        DB::table('permissions')->insert([
             'id'=>33,
             'pid'=>3,
             'name'=>trim('admin.role.show'),

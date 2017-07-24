@@ -7,6 +7,8 @@ use App\Role;
 use App\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class RoleController extends BaseController
 {
@@ -18,9 +20,6 @@ class RoleController extends BaseController
     public function index(Request $request)
     {
 
-
-      /*  $roles = Role::paginate(10);
-        return view('admin.role.index', compact('roles'));*/
         //条件
         $where_str = $request->where_str;
         $where = array();
@@ -44,6 +43,7 @@ class RoleController extends BaseController
     public function create()
     {
         //
+        return view('admin.role.create');
     }
 
     /**
@@ -55,6 +55,24 @@ class RoleController extends BaseController
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'name' => 'required|string|max:255|unique:roles',
+            'display_name' => 'required|string|max:255',
+        ]);
+        DB::beginTransaction();
+        try {
+            $role = new Role();
+            $role->name = $request->name;
+            $role->display_name = $request->display_name;
+            $role->description = $request->description;
+            $role->save();
+            DB::commit();
+            return redirect()->back()->with('success', '添加成功');
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            DB::rollBack();
+            return redirect()->back()->with('error', '添加失败');
+        }
     }
 
     /**
@@ -66,6 +84,8 @@ class RoleController extends BaseController
     public function show(Role $role)
     {
         //
+        $show = 1;
+        return view('admin.role.create', compact(['role', 'show']));
     }
 
     /**
@@ -76,7 +96,8 @@ class RoleController extends BaseController
      */
     public function edit(Role $role)
     {
-        //
+
+        return view('admin.role.create', compact(['role']));
     }
 
     /**
@@ -89,6 +110,22 @@ class RoleController extends BaseController
     public function update(Request $request, Role $role)
     {
         //
+        $this->validate($request, [
+            'display_name' => 'required|string|max:255',
+            'name' => "required|string|max:255|unique:roles,name,$role->id",
+
+        ]);
+        DB::beginTransaction();
+        try {
+            $data = ['name' => $request->name, 'display_name' => $request->display_name,'description' => $request->description];
+            $role->update($data);
+            DB::commit();
+            return redirect()->back()->with('success', '更新成功');
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            DB::rollBack();
+            return redirect()->back()->with('error', '更新失败');
+        }
     }
 
     /**
@@ -100,6 +137,22 @@ class RoleController extends BaseController
     public function destroy(Role $role)
     {
         //
+        DB::beginTransaction();
+        try {
+            $role->users()->detach();
+            $role->perms()->detach();
+            $role->delete();
+            DB::commit();
+            return response()->json([
+                'msg' => 1
+            ]);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            DB::rollBack();
+            return response()->json([
+                'msg' => 0
+            ]);
+        }
     }
 
     public function permission(Request $request, $id)
@@ -142,8 +195,5 @@ class RoleController extends BaseController
                 'msg' => '授权失败'
             ]);
         }
-    }
-    public function batch_destroy(Request $request){
-
     }
 }
