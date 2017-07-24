@@ -251,6 +251,48 @@ class PermissionsTableSeeder extends Seeder
             'ishow'=>0,
             'display_name'=>'授权',
         ]);
+        DB::table('permissions')->insert([
+            'id'=>36,
+            'pid'=>4,
+            'name'=>trim('admin.permission.create'),
+            'ishow'=>0,
+            'display_name'=>'显示新增页',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>37,
+            'pid'=>4,
+            'name'=>trim('admin.permission.edit'),
+            'ishow'=>0,
+            'display_name'=>'显示修改页',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>38,
+            'pid'=>4,
+            'name'=>trim('admin.permission.store'),
+            'ishow'=>0,
+            'display_name'=>'新增',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>39,
+            'pid'=>4,
+            'name'=>trim('admin.permission.update'),
+            'ishow'=>0,
+            'display_name'=>'修改',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>40,
+            'pid'=>4,
+            'name'=>trim('admin.permission.show'),
+            'ishow'=>0,
+            'display_name'=>'查看',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>41,
+            'pid'=>4,
+            'name'=>trim('admin.permission.destroy'),
+            'ishow'=>0,
+            'display_name'=>'删除',
+        ]);
 
 
 

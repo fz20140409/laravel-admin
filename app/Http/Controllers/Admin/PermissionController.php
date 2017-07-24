@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Tools\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class PermissionController extends BaseController
 {
@@ -132,11 +133,6 @@ class PermissionController extends BaseController
         $sub = array();
         //有子菜单
         if (!empty($sub_permissions)) {
-            if (!$request->flag) {
-                return response()->json(['msg' => -1]);
-            }
-            //确认删除子菜单
-
             foreach ($sub_permissions as $sub_permission) {
                 $sub[] = $sub_permission['id'];
             }
@@ -147,15 +143,14 @@ class PermissionController extends BaseController
         }
         DB::beginTransaction();
         try {
-            Permission::destroy($sub);
-
             $permission->roles()->detach($sub);
+            Permission::destroy($sub);
             DB::commit();
             return response()->json([
                 'msg' => 1
             ]);
         } catch (\Exception $exception) {
-            print_r($exception->getMessage());
+            Log::error($exception->getMessage());
             DB::rollBack();
             return response()->json([
                 'msg' => 0

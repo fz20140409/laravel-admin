@@ -10,6 +10,7 @@
             radioClass: 'iradio_minimal-blue'
         });
     </script>
+    @include('admin.common.layer_tip')
 @endsection
 @section('content')
     <section class="content">
@@ -20,7 +21,6 @@
                         <h3 class="box-title">权限</h3>
                     </div>
                     <!-- /.box-header -->
-                @include('admin.common.alert')
                 <!-- form start -->
                     <form class="form-horizontal" method="post"
                           action="@if(isset($permission)){{ route('admin.permission.update',$permission) }}@else{{ route('admin.permission.store') }}@endif">
@@ -118,7 +118,7 @@
                         <!-- /.box-body -->
                         <div class="box-footer">
                             <a href="{{route('admin.permission.index')}}" class="btn btn-default">返回</a>
-                            <button type="submit" class="btn btn-info pull-right">保存</button>
+                            <button type="submit" class="btn btn-primary pull-right">保存</button>
                         </div>
                         <!-- /.box-footer -->
                     </form>

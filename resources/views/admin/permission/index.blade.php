@@ -6,54 +6,51 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        {{--<h3 class="box-title">用户列表</h3>
-
-                        <div class="box-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        <div class="row">
+                            @if(Auth::user()->can('admin.permission.create'))
+                                <div class="col-lg-2 col-xs-2 pull-right">
+                                    <a href="{{route('admin.permission.create')}}" class="btn btn-primary">新增</a>
                                 </div>
-                            </div>
-                        </div>--}}
-                        {{--<div class="col-md-10">
-                            <input type="text">
-                        </div>--}}
-                        <div class="col-md-2 col-md-offset-10">
-                            <a href="{{route('admin.permission.create')}}" class="btn btn-primary" href="">新增</a>
+                            @endif
                         </div>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover table-bordered">
-                            <tr>
-                                <th>图标</th>
-                                <th>菜单名称</th>
-                                <th>权限标识</th>
-                                <th>url</th>
-                                <th>描述</th>
-                                <th>操作</th>
-                            </tr>
-                            @foreach($permissions as $permission)
+                    <form id="user_ids">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
                                 <tr>
-                                    <td><i class="{{$permission['icon']}}" aria-hidden="true"></i></td>
-                                    <td>{{$permission['delimiter'].$permission['display_name']}}</td>
-                                    <td>{{$permission['name']}}</td>
-                                    <td>{{$permission['url']}}</td>
-                                    <td>{{$permission['description']}}</td>
-                                    <td>
-                                        <a href="{{route('admin.permission.edit',$permission['id'])}}"
-                                           style="margin-right: 10px"><i class="fa fa-pencil-square-o "
-                                                                         aria-hidden="true">修改</i></a>
-                                        <a href="javascript:del('{{route('admin.permission.destroy',$permission['id'])}}')"><i
-                                                    class="fa  fa-trash-o " aria-hidden="true">删除</i></a>
-                                    </td>
+                                    <th>图标</th>
+                                    <th>菜单名称</th>
+                                    <th>权限标识</th>
+                                    <th>url</th>
+                                    <th>描述</th>
+                                    <th>操作</th>
                                 </tr>
-                            @endforeach
-                        </table>
+                                @foreach($permissions as $permission)
+                                    <tr>
+                                        <td><i class="{{$permission['icon']}}" aria-hidden="true"></i></td>
+                                        <td>{{$permission['delimiter'].$permission['display_name']}}</td>
+                                        <td>{{$permission['name']}}</td>
+                                        <td>{{$permission['url']}}</td>
+                                        <td>{{$permission['description']}}</td>
+                                        <td>
 
-                    </div>
+                                            <a class=" op_show" href="{{route('admin.permission.show',$permission['id'])}}"
+                                               style="margin-right: 10px;display: none">
+                                                <i class="fa fa-eye " aria-hidden="true">查看</i></a>
+
+                                            <a class=" op_edit"  href="{{route('admin.permission.edit',$permission['id'])}}"
+                                               style="margin-right: 10px;display: none">
+                                                <i class="fa fa-pencil-square-o " aria-hidden="true">修改</i></a>
+
+                                            <a style="display: none"  class=" op_destroy"  href="javascript:del('{{route('admin.permission.destroy',$permission['id'])}}')">
+                                                <i class="fa  fa-trash-o " aria-hidden="true">删除</i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -61,7 +58,6 @@
 @endsection
 
 @section('js')
-    <script src="/plugins/layer/layer.js"></script>
     <script>
         function del(url) {
             layer.confirm('确认删除？', {
@@ -70,39 +66,35 @@
                 $.ajax({
                     url: url,
                     type: 'DELETE',
-                    success: function ($data) {
-                        //有子菜单
-                        if ($data.msg == -1) {
-                            layer.confirm('是否同时删除子菜单？', {
-                                btn: ['确认', '取消']
-                            }, function () {
-                                $.ajax({
-                                    url: url + '?flag=1',
-                                    type: 'DELETE',
-                                    success: function ($data) {
-                                        if ($data.msg == 1) {
-                                            layer.alert('删除成功');
-                                            location.reload();
-                                        } else {
-                                            layer.alert('删除失败');
-                                        }
-                                    }
-                                });
-                            });
-                        }
-                        //无子菜单
-                        if ($data.msg == 1) {
+                    success: function (data) {
+                        if (data.msg == 1) {
                             layer.alert('删除成功');
                             location.reload();
                         } else {
                             layer.alert('删除失败');
                         }
 
-
                     }
                 });
             });
         }
+    </script>
+    <script>
+
+        //有查看权限，显示查看
+        @if(Auth::user()->can('admin.permission.show'))
+             $(".op_show").show();
+        @endif
+
+        //有修改权限，显示修改
+        @if(Auth::user()->can('admin.permission.edit'))
+            $(".op_edit").show();
+        @endif
+        //有删除权限，显示删除
+        @if(Auth::user()->can('admin.permission.destroy'))
+            $(".op_destroy").show();
+        @endif
+
     </script>
 
 @endsection
