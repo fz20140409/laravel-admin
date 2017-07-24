@@ -15,10 +15,25 @@ class RoleController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::paginate(10);
-        return view('admin.role.index', compact('roles'));
+
+
+      /*  $roles = Role::paginate(10);
+        return view('admin.role.index', compact('roles'));*/
+        //条件
+        $where_str = $request->where_str;
+        $where = array();
+        $orWhere = array();
+        if (isset($where_str)) {
+            $where[] = ['name', 'like', '%' . $where_str . '%'];
+            $orWhere[] = ['display_name', 'like', '%' . $where_str . '%'];
+        }
+
+        //分页
+        $roles = Role::where($where)->orWhere($orWhere)->paginate($this->page_size);
+        //视图
+        return view('admin.role.index', ['roles' => $roles, 'where_str' => $where_str, 'page_size' => $this->page_size, 'page_sizes' => $this->page_sizes]);
     }
 
     /**
@@ -127,5 +142,8 @@ class RoleController extends BaseController
                 'msg' => '授权失败'
             ]);
         }
+    }
+    public function batch_destroy(Request $request){
+
     }
 }

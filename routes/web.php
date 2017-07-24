@@ -22,11 +22,14 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
     Route::post('logout', 'LoginController@logout')->name('logout');
     //home
     Route::get('home', 'HomeController@home')->name('home');
+    Route::get('home/flushCache', 'HomeController@flushCache')->name('home.flushCache');
     //user
     Route::resource('user','UserController');
     Route::post('user/batch_destroy','UserController@batch_destroy')->name('user.batch_destroy');
     //role
     Route::resource('role','RoleController');
+    Route::post('role/batch_destroy','RoleController@batch_destroy')->name('role.batch_destroy');
+
     Route::get('role/permission/{id}','RoleController@permission')->name('role.permission');
     Route::post('role/doPermission','RoleController@doPermission')->name('role.doPermission');
     //permission

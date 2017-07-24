@@ -10,6 +10,7 @@ namespace App\Traits;
 
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
+
 trait MyEntrustUserTrait
 {
 
@@ -24,4 +25,5 @@ trait MyEntrustUserTrait
             $this->roles()->detach();
         }
     }
+
 }

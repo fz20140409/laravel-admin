@@ -268,7 +268,7 @@
     });
     function updateCacheMneu() {
         $.ajax({
-            url:'{{route("admin.home")}}',
+            url:'{{route("admin.home.flushCache")}}',
             success:function ($data) {
                if( $data.status==1){
                    layer.alert('缓存更新成功')

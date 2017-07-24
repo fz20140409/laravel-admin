@@ -194,6 +194,63 @@ class PermissionsTableSeeder extends Seeder
             'display_name'=>'修改',
         ]);
 
+        DB::table('permissions')->insert([
+            'id'=>27,
+            'pid'=>3,
+            'name'=>trim('admin.role.create'),
+            'ishow'=>0,
+            'display_name'=>'显示新增页',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>28,
+            'pid'=>3,
+            'name'=>trim('admin.role.edit'),
+            'ishow'=>0,
+            'display_name'=>'显示修改页',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>29,
+            'pid'=>0,
+            'name'=>trim('admin.home.flushCache'),
+            'ishow'=>0,
+            'display_name'=>'更新缓存',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>30,
+            'pid'=>3,
+            'name'=>trim('admin.role.store'),
+            'ishow'=>0,
+            'display_name'=>'新增',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>31,
+            'pid'=>3,
+            'name'=>trim('admin.role.update'),
+            'ishow'=>0,
+            'display_name'=>'修改',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>32,
+            'pid'=>3,
+            'name'=>trim('admin.role.batch_destroy'),
+            'ishow'=>0,
+            'display_name'=>'批量删除',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>33,
+            'pid'=>3,
+            'name'=>trim('admin.role.show'),
+            'ishow'=>0,
+            'display_name'=>'查看',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>34,
+            'pid'=>3,
+            'name'=>trim('admin.role.destroy'),
+            'ishow'=>0,
+            'display_name'=>'删除',
+        ]);
+
 
 
 
