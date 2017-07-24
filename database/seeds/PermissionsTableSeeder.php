@@ -97,7 +97,7 @@ class PermissionsTableSeeder extends Seeder
             'pid'=>3,
             'name'=>trim('admin.role.permission'),
             'ishow'=>0,
-            'display_name'=>'权限',
+            'display_name'=>'显示权限页',
         ]);
         DB::table('permissions')->insert([
             'id'=>14,
@@ -242,6 +242,13 @@ class PermissionsTableSeeder extends Seeder
             'name'=>trim('admin.role.destroy'),
             'ishow'=>0,
             'display_name'=>'删除',
+        ]);
+        DB::table('permissions')->insert([
+            'id'=>35,
+            'pid'=>3,
+            'name'=>trim('admin.role.doPermission'),
+            'ishow'=>0,
+            'display_name'=>'授权',
         ]);
 
 

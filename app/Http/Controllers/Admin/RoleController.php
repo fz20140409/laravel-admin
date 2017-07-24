@@ -176,11 +176,6 @@ class RoleController extends BaseController
     {
         $role_id = intval($request->role_id);
         $permission_ids = $request->permission_ids;
-        if (empty($permission_ids)) {
-            return response()->json([
-                'msg' => '请选择权限'
-            ]);
-        }
         $role = Role::findOrFail($role_id);
         DB::beginTransaction();
         try {

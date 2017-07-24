@@ -12,17 +12,21 @@
         });
     </script>
     <script>
+        //全选
         $('#all').on('ifChecked', function () {
             $('table input[type="checkbox"]').iCheck('check');
         });
+        //反选
         $('#notall').on('ifChecked', function () {
             $('table input[type="checkbox"]').each(function () {
-                if (true == $(this).is(':checked')) {
-
+                if ($(this).is(":checked")) {
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('check');
                 }
-
             });
         });
+        //全不选
         $('#allnot').on('ifChecked', function () {
             $('table input[type="checkbox"]').iCheck('uncheck');
         });
@@ -101,7 +105,7 @@
                     </div>
                     <div class="box-footer">
                         <button onclick="history.go(-1)" class="btn btn-default">取消</button>
-                        <a href="javascript:save('{{route('admin.role.doPermission')}}')" class="btn btn-info pull-right">保存</a>
+                        <a href="javascript:save('{{route('admin.role.doPermission')}}')" class="btn btn-primary pull-right">保存</a>
                     </div>
                 </div>
             </div>
