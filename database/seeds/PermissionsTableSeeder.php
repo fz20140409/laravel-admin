@@ -103,9 +103,10 @@ class PermissionsTableSeeder extends Seeder
             'id'=>14,
             'pid'=>0,
             'name'=>trim('admin.home'),
+            'url'=>'route#admin.home#',
             'icon'=>'fa fa-home',
-            'ishow'=>0,
-            'display_name'=>'后台主页',
+            'ishow'=>1,
+            'display_name'=>'主页',
         ]);
         DB::table('permissions')->insert([
             'id'=>15,
