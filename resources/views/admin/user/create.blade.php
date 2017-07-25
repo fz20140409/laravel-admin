@@ -1,4 +1,15 @@
 @extends('admin.layouts.default')
+@section('t1','用户')
+@if(isset($show))
+        @section('t2','查看')
+   @elseif(isset($user))
+        @section('t2','修改')
+    @else
+        @section('t2','新增')
+@endif
+
+
+
 @section('css')
     <link rel="stylesheet" href="/adminlte/plugins/iCheck/all.css">
     @endsection

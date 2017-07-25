@@ -41,13 +41,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Dashboard
-                <small>Control panel</small>
+               @yield('t1')
+                <small>@yield('t2')</small>
             </h1>
-            <ol class="breadcrumb">
+           {{-- <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Dashboard</li>
-            </ol>
+            </ol>--}}
         </section>
     @yield('content')
     </div>
@@ -282,7 +282,7 @@
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/app.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="/adminlte/dist/js/pages/dashboard.js"></script>
+{{--<script src="/adminlte/dist/js/pages/dashboard.js"></script>--}}
 <!-- AdminLTE for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
 </body>

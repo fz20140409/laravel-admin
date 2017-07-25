@@ -1,5 +1,6 @@
 @extends('admin.layouts.default')
-
+@section('t1','用户')
+@section('t2','列表')
 @section('content')
     <section class="content">
         <div class="row">

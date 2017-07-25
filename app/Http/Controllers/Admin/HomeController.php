@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-
-
 use App\Http\Controllers\Tools\CacheTool;
 
 /**
@@ -17,7 +15,6 @@ class HomeController extends BaseController
     function home()
     {
         CacheTool::cacheMneu();
-
         return view('admin.home.home');
     }
 
@@ -25,7 +22,6 @@ class HomeController extends BaseController
     {
         CacheTool::flush();
         return response()->json(['status' => 1]);
-
     }
 
 }

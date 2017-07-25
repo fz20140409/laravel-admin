@@ -1,4 +1,13 @@
 @extends('admin.layouts.default')
+
+@section('t1','角色')
+@if(isset($show))
+    @section('t2','查看')
+@elseif(isset($role))
+    @section('t2','修改')
+@else
+    @section('t2','新增')
+@endif
 @section('js')
     @include('admin.common.layer_tip')
     @endsection

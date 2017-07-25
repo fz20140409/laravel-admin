@@ -13,7 +13,8 @@ class CacheTool
     static function cacheMneu()
     {
         $key='user_menu_'.Auth::id();
-        if(!Cache::get($key)){
+
+        if(!Cache::tags('user_menu')->has($key)){
             $perms = array();
             $datas = Auth::user()->roles()->with(['perms' => function ($query) {
                 $query->where('ishow', 1);

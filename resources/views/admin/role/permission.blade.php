@@ -1,4 +1,6 @@
 @extends('admin.layouts.default')
+@section('t1','角色')
+@section('t2','权限')
 @section('css')
     <link rel="stylesheet" href="/adminlte/plugins/iCheck/all.css">
 @endsection
@@ -64,7 +66,7 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-primary">
+                <div class="box box-default">
                     <div class="row box-header">
                         <div class="col-sm-10">
                             <div class="form-group">
