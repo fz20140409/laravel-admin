@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Tools\Category;
+
 use App\Http\Controllers\Tools\CacheTool;
 
 /**
@@ -15,21 +14,10 @@ use App\Http\Controllers\Tools\CacheTool;
 class HomeController extends BaseController
 {
 
-    //
     function home()
     {
-        if (!session('perms')) {
-            $perms = array();
-            $datas = Auth::user()->roles()->with(['perms' => function ($query) {
-                $query->where('ishow', 1);
-            }])->get()->toArray();
-            foreach ($datas as $data) {
-                $perms = array_merge_recursive($perms, $data['perms']);
-            }
-            $layer = Category::toLayer($perms);
-            $perms = Category::proMenu($layer);
-            session(['perms' => $perms]);
-        }
+        CacheTool::cacheMneu();
+
         return view('admin.home.home');
     }
 

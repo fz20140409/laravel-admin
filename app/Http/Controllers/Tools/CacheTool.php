@@ -3,42 +3,35 @@
 namespace App\Http\Controllers\Tools;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Permission;
+
 use App\Http\Controllers\Tools\Category;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
 class CacheTool
 {
-    static function cacheMneu($key)
+    static function cacheMneu()
     {
-        $perms = '';
-        $roles = DB::table('role_user')->where(['user_id' => Auth::id()])->get();
-        if (!empty($roles)) {
-            $role_ids = array();
-            foreach ($roles as $role) {
-                $role_ids[] = $role->role_id;
+        $key='user_menu_'.Auth::id();
+        if(!Cache::get($key)){
+            $perms = array();
+            $datas = Auth::user()->roles()->with(['perms' => function ($query) {
+                $query->where('ishow', 1);
+            }])->get()->toArray();
+            foreach ($datas as $data) {
+                $perms = array_merge_recursive($perms, $data['perms']);
             }
-            $permissions = DB::table('permission_role')->whereIn('role_id', $role_ids)->get();
-            if (!empty($permissions)) {
-                $permission_ids = array();
-                foreach ($permissions as $permission) {
-                    $permission_ids[] = $permission->permission_id;
-                }
-                $perms = Permission::whereIn('id', $permission_ids)->where(['ishow' => 1])->get()->toArray();
-            }
-        }
-        if (!empty($perms)) {
             $layer = Category::toLayer($perms);
             $perms = Category::proMenu($layer);
+            Cache::tags('user_menu')->forever($key, $perms);
         }
-        Cache::forever($key, $perms);
 
 
     }
 
     static function flush(){
+        Cache::tags('user_menu')->flush();
+        self::cacheMneu();
         Cache::tags(Config::get('entrust.role_user_table'))->flush();
         Cache::tags(Config::get('entrust.permission_role_table'))->flush();
     }

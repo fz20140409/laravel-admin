@@ -271,6 +271,7 @@
             url:'{{route("admin.home.flushCache")}}',
             success:function ($data) {
                if( $data.status==1){
+                   location.reload();
                    layer.alert('缓存更新成功')
                }
             }
