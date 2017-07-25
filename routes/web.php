@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function () {
-	
-    return view('welcome');
+
+    return redirect()->route('admin.login');
 });
-Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function (){
+Route::group(['prefix'=>config('admin.prefix'),'as'=>'admin.','namespace'=>'Admin'],function (){
     //login
     Route::get('login', 'LoginController@showLoginForm')->name('login');
     Route::post('login', 'LoginController@login')->name('login');
@@ -47,7 +47,4 @@ Route::group(['prefix'=>'admin','as'=>'admin.','namespace'=>'Admin'],function ()
     });
 
 });
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
