@@ -2,7 +2,7 @@
 @section('t1','权限')
 @if(isset($show))
     @section('t2','查看')
-@elseif(isset($user))
+@elseif(isset($permission))
     @section('t2','修改')
 @else
     @section('t2','新增')
