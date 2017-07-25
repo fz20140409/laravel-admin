@@ -73,7 +73,10 @@ class PermissionController extends BaseController
      */
     public function show(Permission $permission)
     {
-        //
+        $show = 1;
+        $permissions = Permission::all()->toArray();
+        $permissions = Category::toLevel($permissions);
+        return view('admin.permission.create', compact(['permission',  'show','permissions']));
     }
 
     /**
